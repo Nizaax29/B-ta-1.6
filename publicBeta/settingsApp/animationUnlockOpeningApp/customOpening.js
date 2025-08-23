@@ -236,6 +236,49 @@ function updateBezierGraphs() {
   initBezier("section-all", false, cubic_all);
 }
 
+const previewPositionIcon = document.getElementById("previewPositionIcon");
+function itemScrollIconPositionEvent(e) {
+  const item = e.currentTarget;
+  const size = item.getAttribute("data-sizeIcon");
+  const position = item.getAttribute("data-positionIcon");
+  document.querySelectorAll(".itemScrollIconPosition").forEach((el) => {
+    el.classList.remove("active");
+  });
+  item.classList.add("active");
+
+  document.querySelectorAll(".box").forEach((box) => {
+    box.style.setProperty("--bg--sizeIcon", size);
+    box.style.setProperty("--bg--positionIcon", position);
+  });
+  previewPositionIcon.style.setProperty("--bg--sizeIcon", size);
+  previewPositionIcon.style.setProperty("--bg--positionIcon", position);
+
+  localStorage.setItem("sizeIcon", size);
+  localStorage.setItem("positionIcon", position);
+}
+
+const timeHidingIcon = document.getElementById("timeHidingIcon");
+const timeHidingIconVal = document.getElementById("timeHidingIconVal");
+
+const delayHidingIcon = document.getElementById("delayHidingIcon");
+const delayHidingIconVal = document.getElementById("delayHidingIconVal");
+
+// Hàm riêng cho time
+function updateTimeHidingIcon() {
+  const val = parseFloat(timeHidingIcon.value).toFixed(2);
+  timeHidingIconVal.textContent = val;
+  root.style.setProperty("--bg--timeHidingIcon", `${val * currentSpeed}s`);
+  localStorage.setItem("timeHidingIcon", `${val}`);
+}
+
+// Hàm riêng cho delay
+function updateDelayHidingIcon() {
+  const val = parseFloat(delayHidingIcon.value).toFixed(2);
+  delayHidingIconVal.textContent = val;
+  root.style.setProperty("--bg--delayHidingIcon", `${val * currentSpeed}s`);
+  localStorage.setItem("delayHidingIcon", `${val}`);
+}
+
 function resetAnimOpenAppBtnEvent(e) {
   time_all = 0.5;
   time_opening_app = time_all * currentSpeed;
@@ -287,6 +330,13 @@ function addEventCustomOpening() {
   scaleAllAppinput.addEventListener("pointerup", scaleAllAppEventUp);
   blurAllAppinput.addEventListener("input", blurAllAppEvent);
 
+  document.querySelectorAll(".itemScrollIconPosition").forEach((item) => {
+    item.addEventListener("click", itemScrollIconPositionEvent);
+  });
+
+  timeHidingIcon.addEventListener("input", updateTimeHidingIcon);
+  delayHidingIcon.addEventListener("input", updateDelayHidingIcon);
+
   document
     .getElementById("reset_anim_open_app_btn")
     .addEventListener("click", resetAnimOpenAppBtnEvent);
@@ -297,6 +347,13 @@ function removeEventCustomOpening() {
   scaleAllAppinput.removeEventListener("input", scaleAllAppEvent);
   scaleAllAppinput.removeEventListener("pointerup", scaleAllAppEventUp);
   blurAllAppinput.removeEventListener("input", blurAllAppEvent);
+
+  document.querySelectorAll(".itemScrollIconPosition").forEach((item) => {
+    item.removeEventListener("click", itemScrollIconPositionEvent);
+  });
+
+  timeHidingIcon.removeEventListener("input", updateTimeHidingIcon);
+  delayHidingIcon.removeEventListener("input", updateDelayHidingIcon);
 
   document
     .getElementById("reset_anim_open_app_btn")
