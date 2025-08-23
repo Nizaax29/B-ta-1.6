@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Phone Style Popup</title>
+    <style>
+      body {
+        background: #f2f2f2;
+        font-family: Arial, sans-serif;
+      }
+
+      /* Backdrop */
+      .popup-backdrop_alert {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0);
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        z-index: 9999;
+        transition: all 0.3s;
+      }
+      .popup-backdrop_alert.show_alert {
+        background: rgba(0, 0, 0, 0.4);
+      }
+
+      /* Popup box */
+      .popup-box_alert {
+        background: #fff;
+        border-radius: 30px;
+        padding: 20px;
+        width: 200px;
+        max-width: 400px;
+        text-align: center;
+        position: absolute;
+        bottom: 20px;
+        transform: translateY(100%);
+        transition: transform 0.4s cubic-bezier(0.27, 0, 0.47, -0.31);
+      }
+      .popup-box_alert.show_alert {
+        transition: transform 0.4s cubic-bezier(0.35, 1.4, 0.66, 1);
+        transform: translateY(0);
+      }
+
+      .popup-message_alert {
+        font-size: 14px;
+        color: #333;
+        margin-bottom: 15px;
+      }
+
+      /* Buttons */
+      .popup-btn_alert {
+        padding: 10px 0;
+        border-radius: 50px;
+        font-weight: bold;
+        font-size: 14px;
+        border: 3px solid #333;
+        background: white;
+        cursor: pointer;
+        width: 100%;
+        transition: opacity 0.2s;
+      }
+      .popup-btn_alert:active {
+        opacity: 0.5;
+      }
+
+      .popup-btn_alert:not(:last-child) {
+        margin-bottom: 10px;
+      }
+
+      .popup-btn_alert.secondary_alert {
+        border: none;
+        color: #666;
+        background: transparent;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      function showPopup1_alert(
+        message_alert,
+        btnText_alert = "Got it",
+        onClose_alert = null
+      ) {
+        createPopup_alert(message_alert, [
+          { text: btnText_alert, action: onClose_alert },
+        ]);
+      }
+
+      function showPopup2_alert(
+        message_alert,
+        yesText_alert = "Yes",
+        noText_alert = "No",
+        onYes_alert = null,
+        onNo_alert = null
+      ) {
+        createPopup_alert(message_alert, [
+          { text: yesText_alert, action: onYes_alert },
+          { text: noText_alert, action: onNo_alert, secondary: true },
+        ]);
+      }
+
+      function createPopup_alert(message_alert, buttons_alert) {
+        const backdrop_alert = document.createElement("div");
+        backdrop_alert.className = "popup-backdrop_alert";
+
+        const box_alert = document.createElement("div");
+        box_alert.className = "popup-box_alert";
+
+        const msg_alert = document.createElement("div");
+        msg_alert.className = "popup-message_alert";
+        msg_alert.textContent = message_alert;
+
+        const btnContainer_alert = document.createElement("div");
+
+        buttons_alert.forEach((btnData_alert) => {
+          const btn_alert = document.createElement("button");
+          btn_alert.className =
+            "popup-btn_alert" +
+            (btnData_alert.secondary ? " secondary_alert" : "");
+          btn_alert.textContent = btnData_alert.text;
+          btn_alert.onclick = () => {
+            closePopup_alert(backdrop_alert);
+            if (typeof btnData_alert.action === "function")
+              btnData_alert.action();
+          };
+          btnContainer_alert.appendChild(btn_alert);
+        });
+
+        box_alert.appendChild(msg_alert);
+        box_alert.appendChild(btnContainer_alert);
+        backdrop_alert.appendChild(box_alert);
+        document.body.appendChild(backdrop_alert);
+
+        // Trigger animation
+        setTimeout(() => {
+          backdrop_alert.classList.add("show_alert");
+          box_alert.classList.add("show_alert");
+        }, 10);
+      }
+
+      function closePopup_alert(backdrop_alert) {
+        const box_alert = backdrop_alert.querySelector(".popup-box_alert");
+        backdrop_alert.classList.remove("show_alert");
+        box_alert.classList.remove("show_alert");
+        setTimeout(() => backdrop_alert.remove(), 300);
+      }
+
+      // DEMO
+      setTimeout(() => {
+        showPopup1_alert(
+          "This app needs permission to access your media sounds.",
+          "Got it",
+          () => console.log("Got it clicked")
+        );
+      }, 300);
+
+      setTimeout(() => {
+        showPopup2_alert(
+          "Are you sure you want to delete this file?",
+          "Yes",
+          "No",
+          () => console.log("Yes clicked"),
+          () => console.log("No clicked")
+        );
+      }, 2500);
+    </script>
+  </body>
+</html>

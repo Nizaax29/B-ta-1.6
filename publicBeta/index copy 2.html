@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>LocalStorage Usage</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #1a1a1a;
+        color: #fff;
+        padding: 20px;
+      }
+      h1 {
+        margin-top: 0;
+      }
+      .bar {
+        background: #333;
+        height: 20px;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-top: 10px;
+      }
+      .fill {
+        background: #4caf50;
+        height: 100%;
+        width: 0%;
+        transition: width 0.3s ease;
+      }
+      .stats {
+        margin-top: 8px;
+        font-size: 14px;
+        color: #ccc;
+      }
+      button {
+        margin-top: 15px;
+        padding: 8px 14px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .reset {
+        background: #e74c3c;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>LocalStorage Usage</h1>
+    <div class="bar"><div class="fill" id="fill"></div></div>
+    <div class="stats" id="stats">0% - 0.00 MB / 5.00 MB</div>
+    <button class="reset" id="resetBtn">Reset All</button>
+
+    <script>
+      const TOTAL_MB = 5; // default quota assumption
+      const fillEl = document.getElementById("fill");
+      const statsEl = document.getElementById("stats");
+      const resetBtn = document.getElementById("resetBtn");
+
+      function getLocalStorageSizeBytes() {
+        let total = 0;
+        for (let i = 0; i < localStorage.length; i++) {
+          const key = localStorage.key(i);
+          const val = localStorage.getItem(key) || "";
+          total += new Blob([key]).size + new Blob([val]).size;
+        }
+        return total;
+      }
+
+      function updateUsage() {
+        const usedBytes = getLocalStorageSizeBytes();
+        const usedMB = usedBytes / (1024 * 1024);
+        const percent = Math.min(100, (usedMB / TOTAL_MB) * 100);
+        fillEl.style.width = percent + "%";
+        statsEl.textContent = `${percent.toFixed(1)}% - ${usedMB.toFixed(
+          2
+        )} MB / ${TOTAL_MB.toFixed(2)} MB`;
+      }
+
+      resetBtn.addEventListener("click", () => {
+        if (confirm("Are you sure you want to reset all localStorage data?")) {
+          localStorage.clear();
+          updateUsage();
+        }
+      });
+
+      updateUsage();
+    </script>
+  </body>
+</html>
