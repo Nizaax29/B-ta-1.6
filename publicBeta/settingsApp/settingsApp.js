@@ -2146,11 +2146,31 @@ function icon_oneui() {
   preview.style.borderRadius = `${value}px`;
   root.style.setProperty("--bg-border_radius", slider.value + "px");
 }
+function icon_harmonyos() {
+  localStorage.setItem("selected_icon_pack", "harmonyos");
+  updateIconBorder("harmonyos_icon");
+  document.documentElement.style.setProperty("--bg-size_img", "100%");
+
+  setIconAndBackgroundGradient("box1", "originos_data/harmonyos_icon/calculator.png");
+  setIconAndBackgroundGradient("box2", "originos_data/harmonyos_icon/files.png");
+  setIconAndBackgroundGradient("box3", "originos_data/harmonyos_icon/music.png");
+  setIconAndBackgroundGradient("box4", "originos_data/harmonyos_icon/settings.png");
+  setIconAndBackgroundGradient("box5", "originos_data/harmonyos_icon/messages.png");
+  setIconAndBackgroundGradient("box6", "originos_data/harmonyos_icon/gallery.png");
+  setIconAndBackgroundGradient("box7", "originos_data/harmonyos_icon/calendar.png");
+  setIconAndBackgroundGradient("box8", "originos_data/harmonyos_icon/phone.png");
+  setIconAndBackgroundGradient("box9", "originos_data/harmonyos_icon/clock.png");
+  setIconAndBackgroundGradient("box10", "originos_data/harmonyos_icon/compass.png");
+  slider.value = 20;
+  value = slider.value;
+  preview.style.borderRadius = `${value}px`;
+  root.style.setProperty("--bg-border_radius", slider.value + "px");
+}
 
 // -- Shared helper to update border --
 function updateIconBorder(activeId) {
   document.querySelectorAll(".box_icon").forEach((el) => {
-    el.style.border = "4px solid gray";
+    el.style.border = "4px solid transparent";
   });
   const active = document.getElementById(activeId);
   if (active) active.style.border = "4px solid #f65268";
@@ -2165,6 +2185,7 @@ function restoreIconPack() {
   else if (pack === "ios") icon_ios();
   else if (pack === "coloros") icon_coloros();
   else if (pack === "oneui") icon_oneui();
+  else if (pack === "harmonyos") icon_harmonyos();
 }
 
 const root = document.documentElement;
@@ -2327,13 +2348,13 @@ function removeAllUIEventListeners() {
     .getElementById("multipleClickAppToggle")
     .removeEventListener("click", handlemultipleClickAppToggle);
 
-  removeEventCustomOpening();
-
   remove_pass_events();
   removeEventListeners_aod_preview();
 
   borderRadiusSystemBtn.removeEventListener("click", showBorderRadiusSystem);
   back_BorderRadiusSystem.removeEventListener("click", hideBorderRadiusSystem);
+  
+  removeEventCustomOpening();
 }
 
 const animation_more_btn = document.getElementById("animation_more_btn");
