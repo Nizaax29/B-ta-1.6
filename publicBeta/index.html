@@ -56,7 +56,7 @@
   <body>
     <div id="loading-screen">
       <div class="spinner"></div>
-      <p>Loading OriginOS V1.5.00 BETA 1</p>
+      <p>Loading OriginOS V1.5.00 BETA 2</p>
       <p>by: Quandz24</p>
       <p id="lolhaha">tiktok: @sungsamtech - @._naq.</p>
     </div>
@@ -879,7 +879,7 @@
               </div>
 
               <div class="aboutI4Item" id="khaysetting1-1">
-                <div class="aboutI4ItemText" id="Vesion">V1.5.00 BETA 1</div>
+                <div class="aboutI4ItemText" id="Vesion">V1.5.00 BETA 2</div>
                 <div class="aboutI4ItemTextSmall">Version</div>
                 <div class="icon_element_red"></div>
               </div>
@@ -965,7 +965,7 @@
                 <div class="back-button" id="back_to_setting10">Version</div>
                 <div class="vesion_text">
                   <div class="content-box-vesion">
-                    <h2>What's New — V1.5.00 Animation update</h2>
+                    <h2>What's New — V1.5.00 Animation update beta 1</h2>
                     <h1>
                       • redesigned everything<br />
                       • bug fixed<br />
@@ -974,6 +974,15 @@
                       • added center controls and smooth animations<br />
                       • added customization<br />
                       • and more!
+                    </h1>
+                  </div>
+                  
+                  <div class="content-box-vesion">
+                    <h2>beta 2</h2>
+                    <h1>
+                      • Fixed multiple click toggle<br />
+                      • Fixed origin island in controls center<br />
+                      • Added time hiding icon app
                     </h1>
                   </div>
                 </div>
@@ -1358,6 +1367,67 @@
                       <div class="footer-text-positionab">
                         High values may cause performance issues on some devices
                       </div>
+                    </div>
+
+                    <div class="section">
+                      <h4>Icon position and hiding time when open app</h4>
+                      <div class="phonePreviewAll">
+                        <div class="open" id="previewPositionIcon"></div>
+                      </div>
+                      <div class="horizontal_scroll">
+                        <div
+                          class="itemScrollIconPosition"
+                          data-positionIcon="top"
+                          data-sizeIcon="cover"
+                        >
+                          Cover
+                        </div>
+                        <div
+                          class="itemScrollIconPosition"
+                          data-positionIcon="top"
+                          data-sizeIcon="110%"
+                        >
+                          Top
+                        </div>
+                        <div
+                          class="itemScrollIconPosition"
+                          data-positionIcon="center"
+                          data-sizeIcon="110%"
+                        >
+                          Center
+                        </div>
+                        <div
+                          class="itemScrollIconPosition"
+                          data-positionIcon="bottom"
+                          data-sizeIcon="110%"
+                        >
+                          Bottom
+                        </div>
+                      </div>
+
+                      <div class="label">
+                        Time: <span id="timeHidingIconVal">0.3</span>s
+                      </div>
+                      <input
+                        type="range"
+                        id="timeHidingIcon"
+                        min="0"
+                        max="0.5"
+                        step="0.01"
+                        value="0.3"
+                      />
+
+                      <div class="label">
+                        Delay time: <span id="delayHidingIconVal">0</span>s
+                      </div>
+                      <input
+                        type="range"
+                        id="delayHidingIcon"
+                        min="0"
+                        max="0.2"
+                        step="0.01"
+                        value="0"
+                      />
                     </div>
 
                     <div class="setting-item_volume sectionForSttingItem">
@@ -2683,6 +2753,36 @@
                       <div class="icon_label">One UI</div>
                     </div>
 
+                    <div class="icon_item" onclick="icon_harmonyos()">
+                      <div class="box_icon" id="harmonyos_icon">
+                        <div
+                          class="mini_icon"
+                          style="
+                            --bg--mini-icon: url('originos_data/harmonyos_icon/settings.png');
+                          "
+                        ></div>
+                        <div
+                          class="mini_icon"
+                          style="
+                            --bg--mini-icon: url('originos_data/harmonyos_icon/music.png');
+                          "
+                        ></div>
+                        <div
+                          class="mini_icon"
+                          style="
+                            --bg--mini-icon: url('originos_data/harmonyos_icon/files.png');
+                          "
+                        ></div>
+                        <div
+                          class="mini_icon"
+                          style="
+                            --bg--mini-icon: url('originos_data/harmonyos_icon/calculator.png');
+                          "
+                        ></div>
+                      </div>
+                      <div class="icon_label">HarmonyOS</div>
+                    </div>
+
                     <!--more-->
                   </div>
                   <div class="icon_item icon_setting_row">
@@ -3345,7 +3445,7 @@
       onclick="if(currentOpeningBtn == document.getElementById('box4')) openApp(3);
       else openApp(4);"
     >
-      V1.5.00 public BETA 1
+      V1.5.00 public BETA 2
     </div>
     <div class="power-button" title="power-button"></div>
 

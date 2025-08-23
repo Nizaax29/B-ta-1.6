@@ -235,7 +235,7 @@ function closePopup() {
   hidePopup_open_close(app);
   app.style.pointerEvents = "none";
 
-  currentOpeningBtn.style.transition = `all ${timeTransformClosing}s ${cubicTransformClosing}, transform ${timeTransformClosing}s ${cubicTransformClosing}, width ${timeScaleClosing}s ${cubicScaleClosing}, z-index ${timeScaleClosing}s`;
+  currentOpeningBtn.style.transition = `all ${timeTransformClosing}s ${cubicTransformClosing}, transform ${timeTransformClosing}s ${cubicTransformClosing}, width ${timeScaleClosing}s ${cubicScaleClosing}, z-index ${timeTransformClosing}s, left ${timeScaleClosing}s ${cubicScaleClosing}, right ${timeScaleClosing}s ${cubicScaleClosing}`;
   clearTimeout(autoHideClickablesTimer);
   currentOpeningBtn.classList.remove("open");
   currentOpeningBtn.classList.remove("hien");
@@ -449,7 +449,7 @@ const handlers = {
       .addEventListener("pointerup", () => {
         clearTimeout(autoHideClickablesTimer);
         if (currentOpeningBtn) {
-          currentOpeningBtn.style.transition = `all ${timeScaleClosing}s ${cubicScaleClosing}`;
+          currentOpeningBtn.style.transition = `all ${time_opening_app}s ${cubicScaleClosing}`;
           currentOpeningBtn.classList.remove("open");
           currentOpeningBtn.classList.remove("hien");
           currentOpeningBtn.style.scale = `${scale_icon}%`;
@@ -926,25 +926,12 @@ function closePopupToIsland3() {
 }
 
 function open_all_island() {
-  if (isRunning_clock) {
-    island.style.height = "25px";
-    island.style.borderRadius = "25px";
-    island.style.width = "120px";
-    buttons_island.classList.remove("show");
-    time_island.classList.remove("show");
-    image_island_right.classList.add("show");
-  }
-
-  if (isPlaying_music) {
-    island2.style.transition = `all 0.35s ease-out, width 0.7s cubic-bezier(.14,1.34,.41,1)`;
-    island2.style.width = "120px";
-    image_island_right2.classList.remove("show");
-    controls_music2.classList.remove("show");
-    popupTitle_music2.classList.remove("show");
-    progressBar_music2.classList.remove("show");
-  }
-
-  if (isPlaying_music && isRunning_clock) {
+  if (
+    isPlaying_music &&
+    isRunning_clock &&
+    currentOpeningBtn != boxes["box9"] &&
+    currentOpeningBtn != boxes["box3"]
+  ) {
     island2.style.transition = `all 0.2s`;
     island2.style.width = "25px";
     island.style.transition = `all 0.35s ease-out, width 0.7s cubic-bezier(.62,0,.25,1.36)`;
@@ -956,6 +943,24 @@ function open_all_island() {
     clock.style.transition = "all 0.6s cubic-bezier(.67,.2,.38,1.27)";
     clock.style.scale = "0.8";
     clock.style.left = "25px";
+  } else {
+    if (isRunning_clock && currentOpeningBtn != boxes["box9"]) {
+      island.style.height = "25px";
+      island.style.borderRadius = "25px";
+      island.style.width = "120px";
+      buttons_island.classList.remove("show");
+      time_island.classList.remove("show");
+      image_island_right.classList.add("show");
+    }
+
+    if (isPlaying_music && currentOpeningBtn != boxes["box3"]) {
+      island2.style.transition = `all 0.35s ease-out, width 0.7s cubic-bezier(.14,1.34,.41,1)`;
+      island2.style.width = "120px";
+      image_island_right2.classList.remove("show");
+      controls_music2.classList.remove("show");
+      popupTitle_music2.classList.remove("show");
+      progressBar_music2.classList.remove("show");
+    }
   }
 }
 
@@ -1939,6 +1944,18 @@ function updateSpeedVars(speed) {
   document.getElementById(
     "scaling-box"
   ).style.animation = `scaleUpDown ${duration}s ease-out infinite`;
+  
+let timeHidingIcon = parseFloat(localStorage.getItem("timeHidingIcon"));
+if (isNaN(timeHidingIcon)) {
+    timeHidingIcon = 0.3;
+}
+document.documentElement.style.setProperty("--bg--timeHidingIcon", `${timeHidingIcon * currentSpeed}s`);
+
+let delayHidingIcon = parseFloat(localStorage.getItem("delayHidingIcon"));
+if (isNaN(delayHidingIcon)) {
+    delayHidingIcon = 0;
+}
+document.documentElement.style.setProperty("--bg--delayHidingIcon", `${delayHidingIcon * currentSpeed}s`);
 }
 
 let animation = lottie.loadAnimation({

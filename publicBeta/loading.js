@@ -473,9 +473,56 @@ window.addEventListener("DOMContentLoaded", () => {
     document
       .getElementById("multipleClickAppToggle")
       .classList.remove("active");
+    multipleClickAppTime = 0;
   }
 
-  unlock();
+  let sizeIcon = localStorage.getItem("sizeIcon");
+  let positionIcon = localStorage.getItem("positionIcon");
+
+  // Nếu chưa có, set mặc định
+  if (!sizeIcon || !positionIcon) {
+    sizeIcon = "cover";
+    positionIcon = "top";
+  }
+
+  // Tìm item khớp và active
+  const defaultItem = document.querySelector(
+    `.itemScrollIconPosition[data-sizeIcon="${sizeIcon}"][data-positionIcon="${positionIcon}"]`
+  );
+
+  if (defaultItem) {
+    defaultItem.classList.add("active");
+  }
+
+  // Áp dụng vào box
+  document.querySelectorAll(".box").forEach((box) => {
+    box.style.setProperty("--bg--sizeIcon", sizeIcon);
+    box.style.setProperty("--bg--positionIcon", positionIcon);
+  });
+  previewPositionIcon.style.setProperty("--bg--sizeIcon", sizeIcon);
+  previewPositionIcon.style.setProperty("--bg--positionIcon", positionIcon);
+
+  if (localStorage.getItem("timeHidingIcon")) {
+    const savedTime = localStorage.getItem("timeHidingIcon");
+    root.style.setProperty(
+      "--bg--timeHidingIcon",
+      `${savedTime * currentSpeed}s`
+    );
+    timeHidingIcon.value = savedTime;
+    timeHidingIconVal.textContent = savedTime;
+  }
+
+  if (localStorage.getItem("delayHidingIcon")) {
+    const savedDelay = localStorage.getItem("delayHidingIcon");
+    root.style.setProperty(
+      "--bg--delayHidingIcon",
+      `${savedDelay * currentSpeed}s`
+    );
+    delayHidingIcon.value = savedDelay;
+    delayHidingIconVal.textContent = savedDelay;
+  }
+
+  lock();
   //openApp(4);
   //showPopup_open_close_noanim(app4animation);
   //showPopup_open_close_noanim(app4_more_animation);

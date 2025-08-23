@@ -13,6 +13,9 @@
   --bg--color: #101010;
   --bg--wallpaper: url("originos_data/462489103_1400206661384168_7007140902614083639_n.jpg")
     no-repeat center center;
+
+  --bg--timeHidingIcon: 0.3s;
+  --bg--delayHidingIcon: 0s;
 }
 html,
 body {
@@ -185,6 +188,8 @@ body::-webkit-scrollbar-thumb:hover {
   z-index: 1;
   top: 605px;
   scale: 100%;
+  --bg--sizeIcon: cover;
+  --bg--positionIcon: top;
 }
 
 /* Default icon background */
@@ -198,10 +203,30 @@ body::-webkit-scrollbar-thumb:hover {
   transition: all 0.3s ease;
   z-index: 0;
   opacity: 1;
-  background-size: 105%;
+  background-size: 110%;
+}
+#previewPositionIcon {
+  position: relative;
+  --bg--originos: url("originos_data/system_calculator.png");
+  background-color: #3d4044;
+  --bg--sizeIcon: cover;
+  --bg--positionIcon: top;
+  height: 100%;
+  width: 100%;
 }
 
-/* Custom lock positions
+#previewPositionIcon::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  background: var(--bg--originos) no-repeat center center/110%;
+  z-index: 0;
+  opacity: 1;
+}
+
+/* Custom lock positions */
+#previewPositionIcon.open::before,
 #box4.open::before,
 #box3.open::before,
 #box2.open::before,
@@ -212,11 +237,15 @@ body::-webkit-scrollbar-thumb:hover {
 #box8.open::before,
 #box9.open::before,
 #box10.open::before,
-#box11.open::before,
+#box11.open::before {
+  background-size: var(--bg--sizeIcon);
+  background-position: var(--bg--positionIcon);
+}
+
 #box12.open::before {
   background-size: cover;
 }
- */
+
 /* Icon background images */
 #box1 {
   --bg--originos: url("originos_data/system_calculator.png");
@@ -809,6 +838,9 @@ body::-webkit-scrollbar-thumb:hover {
   justify-content: start;
   font-family: "Noto sans", sans-serif;
   pointer-events: none;
+}
+.app {
+  transition: all var(--bg--timeHidingIcon) ease var(--bg--delayHidingIcon);
 }
 #app4 {
   gap: 0;
@@ -2682,6 +2714,7 @@ input[type="range"] {
   background: var(--bg--background2);
   border-radius: 15px;
   padding: 15px;
+  margin-top: 10px;
 }
 
 .content-box-vesion h2 {
@@ -2864,10 +2897,11 @@ input[type="range"] {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
-  padding: 10px;
   overflow-y: auto;
   max-height: 400px;
   margin-bottom: 10px;
+  border-radius: 16px;
+  overflow-x: hidden;
 }
 
 .icon_item {
@@ -2880,14 +2914,14 @@ input[type="range"] {
 .box_icon {
   width: 100%;
   aspect-ratio: 1 / 1;
-  border: 4px solid gray;
+  border: 4px solid transparent;
   border-radius: 16px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   gap: 8px;
   padding: 10px;
-  background: var(--bg-box, transparent);
+  background: var(--bg--background2);
   box-sizing: border-box;
   overflow: hidden;
 }
@@ -2915,7 +2949,7 @@ input[type="range"] {
   align-items: center;
   gap: 16px;
   padding: 12px 16px;
-  border: 4px solid gray;
+  background: var(--bg--background2);
   border-radius: 16px;
   width: 80%;
 }
@@ -4320,6 +4354,11 @@ input[type="color"] {
   outline-offset: 1px;
   background: rgb(53, 53, 53);
   overflow: hidden;
+  flex: 0 0 auto;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  scroll-snap-align: center;
+  display: flex;
 }
 .gridAppScreen {
   position: relative;
@@ -4381,9 +4420,29 @@ input[type="color"] {
   font-size: 10px;
   color: gray;
 }
+.itemScrollIconPosition.active,
 .item_anim_controlsCenter.active,
 .item_unlock_anim.active {
   border: 4px solid #f65268;
+}
+
+.itemScrollIconPosition {
+  flex-shrink: 0;
+  width: 120px;
+  height: 70px;
+  border-radius: calc(
+    var(--bg--border_radius_system) - var(--bg--border_radius_system) / 3
+  );
+  background-color: rgb(30, 30, 30);
+  scroll-snap-align: center;
+  border: 4px solid rgb(30, 30, 30);
+  font-family: "Noto sans", sans-serif;
+  font-size: 15px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
 }
 
 .phone-frameControlsCenter {
