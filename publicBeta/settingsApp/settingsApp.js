@@ -99,7 +99,7 @@ function hidePopup_open_close(target, mode = "none", className = "open") {
   hideTimeouts_open_close[id] = setTimeout(() => {
     el.style.display = mode;
     hideTimeouts_open_close[id] = null;
-  }, 400);
+  }, currentSpeed700);
 }
 
 //about option
@@ -1988,6 +1988,7 @@ function icon_originos() {
   value = slider.value;
   preview.style.borderRadius = `${value}px`;
   root.style.setProperty("--bg-border_radius", slider.value + "px");
+  slider.disabled = false;
 }
 
 function icon_hyperos() {
@@ -1997,48 +1998,49 @@ function icon_hyperos() {
 
   setIconAndBackgroundGradient2(
     "box1",
-    "originos_data/hype_icon/system_calculator.png"
+    "originos_data/iconPacks/hype_icon/system_calculator.png"
   );
   setIconAndBackgroundGradient2(
     "box2",
-    "originos_data/hype_icon/system_filemanager.png"
+    "originos_data/iconPacks/hype_icon/system_filemanager.png"
   );
   setIconAndBackgroundGradient2(
     "box3",
-    "originos_data/hype_icon/system_music.png"
+    "originos_data/iconPacks/hype_icon/system_music.png"
   );
   setIconAndBackgroundGradient2(
     "box4",
-    "originos_data/hype_icon/system_settings.png"
+    "originos_data/iconPacks/hype_icon/system_settings.png"
   );
   setIconAndBackgroundGradient2(
     "box5",
-    "originos_data/hype_icon/system_messages.png"
+    "originos_data/iconPacks/hype_icon/system_messages.png"
   );
   setIconAndBackgroundGradient2(
     "box6",
-    "originos_data/hype_icon/system_photos.png"
+    "originos_data/iconPacks/hype_icon/system_photos.png"
   );
   setIconAndBackgroundGradient2(
     "box7",
-    "originos_data/hype_icon/system_calendar.png"
+    "originos_data/iconPacks/hype_icon/system_calendar.png"
   );
   setIconAndBackgroundGradient2(
     "box8",
-    "originos_data/hype_icon/system_dialer.png"
+    "originos_data/iconPacks/hype_icon/system_dialer.png"
   );
   setIconAndBackgroundGradient2(
     "box9",
-    "originos_data/hype_icon/system_clock.png"
+    "originos_data/iconPacks/hype_icon/system_clock.png"
   );
   setIconAndBackgroundGradient2(
     "box10",
-    "originos_data/hype_icon/system_compass.png"
+    "originos_data/iconPacks/hype_icon/system_compass.png"
   );
   slider.value = 20;
   value = slider.value;
   preview.style.borderRadius = `${value}px`;
   root.style.setProperty("--bg-border_radius", slider.value + "px");
+  slider.disabled = false;
 }
 
 function icon_ios(e) {
@@ -2046,20 +2048,51 @@ function icon_ios(e) {
   updateIconBorder("ios_icon");
   document.documentElement.style.setProperty("--bg-size_img", "115%");
 
-  setIconAndBackgroundGradient("box1", "originos_data/i_icon/calculator.png");
-  setIconAndBackgroundGradient("box2", "originos_data/i_icon/files.png");
-  setIconAndBackgroundGradient("box3", "originos_data/i_icon/music.png");
-  setIconAndBackgroundGradient("box4", "originos_data/i_icon/settings.png");
-  setIconAndBackgroundGradient("box5", "originos_data/i_icon/messages.png");
-  setIconAndBackgroundGradient("box6", "originos_data/i_icon/gallery.png");
-  setIconAndBackgroundGradient("box7", "originos_data/i_icon/calendar.png");
-  setIconAndBackgroundGradient("box8", "originos_data/i_icon/phone.png");
-  setIconAndBackgroundGradient("box9", "originos_data/i_icon/clock.png");
-  setIconAndBackgroundGradient("box10", "originos_data/i_icon/compass.png");
+  setIconAndBackgroundGradient(
+    "box1",
+    "originos_data/iconPacks/i_icon/calculator.png"
+  );
+  setIconAndBackgroundGradient(
+    "box2",
+    "originos_data/iconPacks/i_icon/files.png"
+  );
+  setIconAndBackgroundGradient(
+    "box3",
+    "originos_data/iconPacks/i_icon/music.png"
+  );
+  setIconAndBackgroundGradient(
+    "box4",
+    "originos_data/iconPacks/i_icon/settings.png"
+  );
+  setIconAndBackgroundGradient(
+    "box5",
+    "originos_data/iconPacks/i_icon/messages.png"
+  );
+  setIconAndBackgroundGradient(
+    "box6",
+    "originos_data/iconPacks/i_icon/gallery.png"
+  );
+  setIconAndBackgroundGradient(
+    "box7",
+    "originos_data/iconPacks/i_icon/calendar.png"
+  );
+  setIconAndBackgroundGradient(
+    "box8",
+    "originos_data/iconPacks/i_icon/phone.png"
+  );
+  setIconAndBackgroundGradient(
+    "box9",
+    "originos_data/iconPacks/i_icon/clock.png"
+  );
+  setIconAndBackgroundGradient(
+    "box10",
+    "originos_data/iconPacks/i_icon/compass.png"
+  );
   slider.value = 20;
   value = slider.value;
   preview.style.borderRadius = `${value}px`;
   root.style.setProperty("--bg-border_radius", slider.value + "px");
+  slider.disabled = false;
 }
 
 function icon_coloros() {
@@ -2067,20 +2100,51 @@ function icon_coloros() {
   updateIconBorder("coloros_icon");
   document.documentElement.style.setProperty("--bg-size_img", "100%");
 
-  setIconAndBackgroundGradient("box1", "originos_data/o_icon/calculator.png");
-  setIconAndBackgroundGradient("box2", "originos_data/o_icon/files.png");
-  setIconAndBackgroundGradient("box3", "originos_data/o_icon/music.png");
-  setIconAndBackgroundGradient("box4", "originos_data/o_icon/settings.png");
-  setIconAndBackgroundGradient("box5", "originos_data/o_icon/messages.png");
-  setIconAndBackgroundGradient("box6", "originos_data/o_icon/gallery.png");
-  setIconAndBackgroundGradient("box7", "originos_data/o_icon/calendar.png");
-  setIconAndBackgroundGradient("box8", "originos_data/o_icon/phone.png");
-  setIconAndBackgroundGradient("box9", "originos_data/o_icon/clock.png");
-  setIconAndBackgroundGradient("box10", "originos_data/o_icon/compass.png");
+  setIconAndBackgroundGradient(
+    "box1",
+    "originos_data/iconPacks/o_icon/calculator.png"
+  );
+  setIconAndBackgroundGradient(
+    "box2",
+    "originos_data/iconPacks/o_icon/files.png"
+  );
+  setIconAndBackgroundGradient(
+    "box3",
+    "originos_data/iconPacks/o_icon/music.png"
+  );
+  setIconAndBackgroundGradient(
+    "box4",
+    "originos_data/iconPacks/o_icon/settings.png"
+  );
+  setIconAndBackgroundGradient(
+    "box5",
+    "originos_data/iconPacks/o_icon/messages.png"
+  );
+  setIconAndBackgroundGradient(
+    "box6",
+    "originos_data/iconPacks/o_icon/gallery.png"
+  );
+  setIconAndBackgroundGradient(
+    "box7",
+    "originos_data/iconPacks/o_icon/calendar.png"
+  );
+  setIconAndBackgroundGradient(
+    "box8",
+    "originos_data/iconPacks/o_icon/phone.png"
+  );
+  setIconAndBackgroundGradient(
+    "box9",
+    "originos_data/iconPacks/o_icon/clock.png"
+  );
+  setIconAndBackgroundGradient(
+    "box10",
+    "originos_data/iconPacks/o_icon/compass.png"
+  );
   slider.value = 20;
   value = slider.value;
   preview.style.borderRadius = `${value}px`;
   root.style.setProperty("--bg-border_radius", slider.value + "px");
+  slider.disabled = false;
 }
 
 const preview = document.getElementById("preview_icon");
@@ -2092,79 +2156,291 @@ function icon_oneui() {
 
   box1.style.setProperty(
     "--bg--originos",
-    `url("originos_data/oui_icon/calculator.png")`
+    `url("originos_data/iconPacks/oui_icon/calculator.png")`
   );
   box1.style.background = "#00000000";
 
   box2.style.setProperty(
     "--bg--originos",
-    `url("originos_data/oui_icon/files.png")`
+    `url("originos_data/iconPacks/oui_icon/files.png")`
   );
   box2.style.background = "#00000000";
 
   box3.style.setProperty(
     "--bg--originos",
-    `url("originos_data/oui_icon/music.png")`
+    `url("originos_data/iconPacks/oui_icon/music.png")`
   );
   box3.style.background = "#00000000";
 
   box4.style.setProperty(
     "--bg--originos",
-    `url("originos_data/oui_icon/settings.png")`
+    `url("originos_data/iconPacks/oui_icon/settings.png")`
   );
   box4.style.background = "#00000000";
 
   box5.style.setProperty(
     "--bg--originos",
-    `url("originos_data/oui_icon/messages.png")`
+    `url("originos_data/iconPacks/oui_icon/messages.png")`
   );
   box5.style.background = "#00000000";
 
   box6.style.setProperty(
     "--bg--originos",
-    `url("originos_data/oui_icon/gallery.png")`
+    `url("originos_data/iconPacks/oui_icon/gallery.png")`
   );
   box6.style.background = "#00000000";
 
   box7.style.setProperty(
     "--bg--originos",
-    `url("originos_data/oui_icon/calendar.png")`
+    `url("originos_data/iconPacks/oui_icon/calendar.png")`
   );
   box7.style.background = "#00000000";
 
   box8.style.setProperty(
     "--bg--originos",
-    `url("originos_data/oui_icon/phone.png")`
+    `url("originos_data/iconPacks/oui_icon/phone.png")`
   );
   box8.style.background = "#00000000";
 
-  setIconAndBackgroundGradient("box9", "originos_data/oui_icon/clock.png");
-  setIconAndBackgroundGradient("box10", "originos_data/oui_icon/compass.png");
+  setIconAndBackgroundGradient(
+    "box9",
+    "originos_data/iconPacks/oui_icon/clock.png"
+  );
+  setIconAndBackgroundGradient(
+    "box10",
+    "originos_data/iconPacks/oui_icon/compass.png"
+  );
 
   slider.value = 23;
   value = slider.value;
   preview.style.borderRadius = `${value}px`;
   root.style.setProperty("--bg-border_radius", slider.value + "px");
+  slider.disabled = true;
 }
 function icon_harmonyos() {
   localStorage.setItem("selected_icon_pack", "harmonyos");
   updateIconBorder("harmonyos_icon");
-  document.documentElement.style.setProperty("--bg-size_img", "100%");
+  document.documentElement.style.setProperty("--bg-size_img", "110%");
 
-  setIconAndBackgroundGradient("box1", "originos_data/harmonyos_icon/calculator.png");
-  setIconAndBackgroundGradient("box2", "originos_data/harmonyos_icon/files.png");
-  setIconAndBackgroundGradient("box3", "originos_data/harmonyos_icon/music.png");
-  setIconAndBackgroundGradient("box4", "originos_data/harmonyos_icon/settings.png");
-  setIconAndBackgroundGradient("box5", "originos_data/harmonyos_icon/messages.png");
-  setIconAndBackgroundGradient("box6", "originos_data/harmonyos_icon/gallery.png");
-  setIconAndBackgroundGradient("box7", "originos_data/harmonyos_icon/calendar.png");
-  setIconAndBackgroundGradient("box8", "originos_data/harmonyos_icon/phone.png");
-  setIconAndBackgroundGradient("box9", "originos_data/harmonyos_icon/clock.png");
-  setIconAndBackgroundGradient("box10", "originos_data/harmonyos_icon/compass.png");
+  setIconAndBackgroundGradient(
+    "box1",
+    "originos_data/iconPacks/harmonyos_icon/calculator.png"
+  );
+  setIconAndBackgroundGradient(
+    "box2",
+    "originos_data/iconPacks/harmonyos_icon/files.png"
+  );
+  setIconAndBackgroundGradient(
+    "box3",
+    "originos_data/iconPacks/harmonyos_icon/music.png"
+  );
+  setIconAndBackgroundGradient(
+    "box4",
+    "originos_data/iconPacks/harmonyos_icon/settings.png"
+  );
+  setIconAndBackgroundGradient(
+    "box5",
+    "originos_data/iconPacks/harmonyos_icon/messages.png"
+  );
+  setIconAndBackgroundGradient(
+    "box6",
+    "originos_data/iconPacks/harmonyos_icon/gallery.png"
+  );
+  setIconAndBackgroundGradient(
+    "box7",
+    "originos_data/iconPacks/harmonyos_icon/calendar.png"
+  );
+  setIconAndBackgroundGradient(
+    "box8",
+    "originos_data/iconPacks/harmonyos_icon/phone.png"
+  );
+  setIconAndBackgroundGradient(
+    "box9",
+    "originos_data/iconPacks/harmonyos_icon/clock.png"
+  );
+  setIconAndBackgroundGradient(
+    "box10",
+    "originos_data/iconPacks/harmonyos_icon/compass.png"
+  );
   slider.value = 20;
   value = slider.value;
   preview.style.borderRadius = `${value}px`;
   root.style.setProperty("--bg-border_radius", slider.value + "px");
+  slider.disabled = false;
+}
+
+function icon_ios26_light1() {
+  localStorage.setItem("selected_icon_pack", "i26Light1");
+  updateIconBorder("i26Light1");
+  document.documentElement.style.setProperty("--bg-size_img", "100%");
+
+  setIconAndBackgroundGradient(
+    "box1",
+    "originos_data/iconPacks/i26Light1/calculator.png"
+  );
+  setIconAndBackgroundGradient(
+    "box2",
+    "originos_data/iconPacks/i26Light1/files.png"
+  );
+  setIconAndBackgroundGradient(
+    "box3",
+    "originos_data/iconPacks/i26Light1/music.png"
+  );
+  setIconAndBackgroundGradient(
+    "box4",
+    "originos_data/iconPacks/i26Light1/settings.png"
+  );
+  setIconAndBackgroundGradient(
+    "box5",
+    "originos_data/iconPacks/i26Light1/messages.png"
+  );
+  setIconAndBackgroundGradient(
+    "box6",
+    "originos_data/iconPacks/i26Light1/gallery.png"
+  );
+  setIconAndBackgroundGradient(
+    "box7",
+    "originos_data/iconPacks/i26Light1/calendar.png"
+  );
+  setIconAndBackgroundGradient(
+    "box8",
+    "originos_data/iconPacks/i26Light1/phone.png"
+  );
+  setIconAndBackgroundGradient(
+    "box9",
+    "originos_data/iconPacks/i26Light1/clock.png"
+  );
+  setIconAndBackgroundGradient(
+    "box10",
+    "originos_data/iconPacks/i26Light1/compass.png"
+  );
+  slider.value = 20;
+  value = slider.value;
+  preview.style.borderRadius = `${value}px`;
+  root.style.setProperty("--bg-border_radius", slider.value + "px");
+  slider.disabled = false;
+}
+
+function icon_ios26_light2() {
+  localStorage.setItem("selected_icon_pack", "i26Light2");
+  updateIconBorder("i26Light2");
+  document.documentElement.style.setProperty("--bg-size_img", "100%");
+
+  box1.style.setProperty(
+    "--bg--originos",
+    `url("originos_data/iconPacks/i26Light2/calculator.png")`
+  );
+  box1.style.background = "#00000000";
+
+  box2.style.setProperty(
+    "--bg--originos",
+    `url("originos_data/iconPacks/i26Light2/files.png")`
+  );
+  box2.style.background = "#00000000";
+
+  box3.style.setProperty(
+    "--bg--originos",
+    `url("originos_data/iconPacks/i26Light2/music.png")`
+  );
+  box3.style.background = "#00000000";
+
+  box4.style.setProperty(
+    "--bg--originos",
+    `url("originos_data/iconPacks/i26Light2/settings.png")`
+  );
+  box4.style.background = "#00000000";
+
+  box5.style.setProperty(
+    "--bg--originos",
+    `url("originos_data/iconPacks/i26Light2/messages.png")`
+  );
+  box5.style.background = "#00000000";
+
+  box6.style.setProperty(
+    "--bg--originos",
+    `url("originos_data/iconPacks/i26Light2/gallery.png")`
+  );
+  box6.style.background = "#00000000";
+
+  box7.style.setProperty(
+    "--bg--originos",
+    `url("originos_data/iconPacks/i26Light2/calendar.png")`
+  );
+  box7.style.background = "#00000000";
+
+  box8.style.setProperty(
+    "--bg--originos",
+    `url("originos_data/iconPacks/i26Light2/phone.png")`
+  );
+  box8.style.background = "#00000000";
+
+  box9.style.setProperty(
+    "--bg--originos",
+    `url("originos_data/iconPacks/i26Light2/clock.png")`
+  );
+  box9.style.background = "#ffffff50";
+
+  box10.style.setProperty(
+    "--bg--originos",
+    `url("originos_data/iconPacks/i26Light2/compass.png")`
+  );
+  box10.style.background = "#ffffff50";
+  slider.value = 20;
+  value = slider.value;
+  preview.style.borderRadius = `${value}px`;
+  root.style.setProperty("--bg-border_radius", slider.value + "px");
+  slider.disabled = false;
+}
+function icon_pixel() {
+  localStorage.setItem("selected_icon_pack", "pixel");
+  updateIconBorder("pix_icon");
+  document.documentElement.style.setProperty("--bg-size_img", "110%");
+
+  setIconAndBackgroundGradient(
+    "box1",
+    "originos_data/iconPacks/pix_icon/calculator.png"
+  );
+  setIconAndBackgroundGradient(
+    "box2",
+    "originos_data/iconPacks/pix_icon/files.png"
+  );
+  setIconAndBackgroundGradient(
+    "box3",
+    "originos_data/iconPacks/pix_icon/music.png"
+  );
+  setIconAndBackgroundGradient(
+    "box4",
+    "originos_data/iconPacks/pix_icon/settings.png"
+  );
+  setIconAndBackgroundGradient(
+    "box5",
+    "originos_data/iconPacks/pix_icon/messages.png"
+  );
+  setIconAndBackgroundGradient(
+    "box6",
+    "originos_data/iconPacks/pix_icon/gallery.png"
+  );
+  setIconAndBackgroundGradient(
+    "box7",
+    "originos_data/iconPacks/pix_icon/calendar.png"
+  );
+  setIconAndBackgroundGradient(
+    "box8",
+    "originos_data/iconPacks/pix_icon/phone.png"
+  );
+  setIconAndBackgroundGradient(
+    "box9",
+    "originos_data/iconPacks/pix_icon/clock.png"
+  );
+  setIconAndBackgroundGradient(
+    "box10",
+    "originos_data/iconPacks/pix_icon/compass.png"
+  );
+  slider.value = 40;
+  value = slider.value;
+  preview.style.borderRadius = `${value}px`;
+  root.style.setProperty("--bg-border_radius", slider.value + "px");
+  slider.disabled = true;
 }
 
 // -- Shared helper to update border --
@@ -2186,6 +2462,10 @@ function restoreIconPack() {
   else if (pack === "coloros") icon_coloros();
   else if (pack === "oneui") icon_oneui();
   else if (pack === "harmonyos") icon_harmonyos();
+  else if (pack === "i26Light2") icon_ios26_light2();
+  else if (pack === "i26Light1") icon_ios26_light1();
+  else if (pack === "pixel") icon_pixel();
+  else icon_originos();
 }
 
 const root = document.documentElement;
@@ -2193,13 +2473,14 @@ const slider = document.getElementById("radius_slider");
 
 let value;
 
-slider.addEventListener("input", () => {
+slider.addEventListener("pointerdown", () => {
   pack = localStorage.getItem("selected_icon_pack");
-  if (pack === "oneui") {
-    tb_system("Can't change the roundness of icons in One UI 7");
-    slider.value = 23;
+  if (pack === "oneui" || pack === "pixel") {
+    tb_system(`Can't change the roundness of this icon pack`);
     return;
   }
+});
+slider.addEventListener("input", () => {
   root.style.setProperty("--bg-border_radius", slider.value + "px");
   value = slider.value;
   preview.style.borderRadius = `${value}px`;
@@ -2273,7 +2554,7 @@ function setIconAndBackgroundGradient(boxSelector, imageUrl) {
 
     const centerX = Math.floor(w / 2);
     const topY = Math.min(8, h - 1);
-    const bottomY = Math.max(h - 8, 0);
+    const bottomY = Math.max(h - 9, 0);
 
     try {
       const top = ctx.getImageData(centerX, topY, 1, 1).data;
@@ -2348,13 +2629,14 @@ function removeAllUIEventListeners() {
     .getElementById("multipleClickAppToggle")
     .removeEventListener("click", handlemultipleClickAppToggle);
 
+  removeEventCustomOpening();
+  removeEventCustomSclosing();
+
   remove_pass_events();
   removeEventListeners_aod_preview();
 
   borderRadiusSystemBtn.removeEventListener("click", showBorderRadiusSystem);
   back_BorderRadiusSystem.removeEventListener("click", hideBorderRadiusSystem);
-  
-  removeEventCustomOpening();
 }
 
 const animation_more_btn = document.getElementById("animation_more_btn");
@@ -2394,6 +2676,91 @@ function hide_app4MoreAnimation() {
   );
   back19.removeEventListener("click", hide_app4ControlsCenterAnim);
 }
+
+document.getElementById("uploadFileTXT").addEventListener("click", () => {
+  document.getElementById("uploadConfig").click();
+});
+const allowedKeys = [
+  "time_allTmp",
+  "valScaleApp",
+  "valScaleWallpaper",
+  "cubic_ratioParam",
+  "cubic_allParam",
+  "timeHidingIconAppTmp",
+  "delayHidingIconAppTmp",
+  "valTimeTransform",
+  "valDampingTransform",
+  "timeScale",
+  "valDampingScale",
+  "valEasing",
+  "timeShowingIconAppTmp",
+  "delayShowingIconAppTmp",
+  "sizeIconOpening",
+  "positionIconOpening",
+];
+
+document
+  .getElementById("uploadConfig")
+  .addEventListener("change", function (e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    if (file.type !== "text/plain") {
+      showPopup1_alert("❌ Chỉ chấp nhận file .txt");
+      this.value = ""; // reset input
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const content = event.target.result;
+      try {
+        const config = {};
+        const lines = content
+          .split("\n")
+          .map((l) => l.trim())
+          .filter((l) => l.length > 0)
+          .map((l) => l.split("//")[0].trim()); // bỏ comment
+
+        for (let line of lines) {
+          if (!line.includes(":")) continue;
+
+          let [key, rawVal] = line
+            .split(":")
+            .map((s) => s.trim().replace(/,$/, ""));
+
+          if (!allowedKeys.includes(key)) {
+            showPopup1_alert(`❌ Key không hợp lệ: ${key}`);
+            this.value = "";
+            return;
+          }
+
+          let val;
+          if (rawVal.startsWith('"') && rawVal.endsWith('"')) {
+            val = rawVal.slice(1, -1); // string
+          } else {
+            val = parseFloat(rawVal);
+            if (isNaN(val)) {
+              showPopup1_alert(`❌ Giá trị không hợp lệ tại key: ${key}`);
+              this.value = "";
+              return;
+            }
+          }
+
+          config[key] = val;
+        }
+
+        // chạy config
+        animationCustomByTXT(config);
+      } catch (err) {
+        showPopup1_alert("❌ File cấu hình không hợp lệ");
+        console.error(err);
+      } finally {
+        this.value = ""; // luôn reset input để có thể upload lại
+      }
+    };
+    reader.readAsText(file);
+  });
 
 const anim_unlock_btn = document.getElementById("anim_unlock_btn");
 const app4_unlock_animation = document.getElementById("app4UnlockAnimation");
@@ -2523,9 +2890,13 @@ const back18 = document.getElementById("back_AppClosingAnimation");
 
 function show_app4AppClosingAnimation() {
   showPopup_open_close(app4AppClosingAnimation);
+
+  addEventCustomSclosing();
 }
 function hide_app4AppClosingAnimation() {
   hidePopup_open_close(app4AppClosingAnimation);
+
+  removeEventCustomSclosing();
 }
 
 const ControlsCenterAnimBtn = document.getElementById("ControlsCenterAnimBtn");

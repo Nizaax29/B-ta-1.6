@@ -522,6 +522,26 @@ window.addEventListener("DOMContentLoaded", () => {
     delayHidingIconVal.textContent = savedDelay;
   }
 
+  if (localStorage.getItem("timeShowingIcon")) {
+    const savedTime = localStorage.getItem("timeShowingIcon");
+    root.style.setProperty(
+      "--bg--timeShowingIcon",
+      `${savedTime * currentSpeed}s`
+    );
+    timeShowingIcon.value = savedTime;
+    timeShowingIconVal.textContent = savedTime;
+  }
+
+  if (localStorage.getItem("delayShowingIcon")) {
+    const savedDelay = localStorage.getItem("delayShowingIcon");
+    root.style.setProperty(
+      "--bg--delayShowingIcon",
+      `${savedDelay * currentSpeed}s`
+    );
+    delayShowingIcon.value = savedDelay;
+    delayShowingIconVal.textContent = savedDelay;
+  }
+
   lock();
   //openApp(4);
   //showPopup_open_close_noanim(app4animation);

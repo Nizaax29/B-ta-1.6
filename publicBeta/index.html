@@ -56,7 +56,7 @@
   <body>
     <div id="loading-screen">
       <div class="spinner"></div>
-      <p>Loading OriginOS V1.5.00 BETA 2</p>
+      <p>Loading OriginOS V1.5.00 BETA 3</p>
       <p>by: Quandz24</p>
       <p id="lolhaha">tiktok: @sungsamtech - @._naq.</p>
     </div>
@@ -879,7 +879,7 @@
               </div>
 
               <div class="aboutI4Item" id="khaysetting1-1">
-                <div class="aboutI4ItemText" id="Vesion">V1.5.00 BETA 2</div>
+                <div class="aboutI4ItemText" id="Vesion">V1.5.00 BETA 3</div>
                 <div class="aboutI4ItemTextSmall">Version</div>
                 <div class="icon_element_red"></div>
               </div>
@@ -976,13 +976,21 @@
                       • and more!
                     </h1>
                   </div>
-                  
+
                   <div class="content-box-vesion">
                     <h2>beta 2</h2>
                     <h1>
                       • Fixed multiple click toggle<br />
                       • Fixed origin island in controls center<br />
                       • Added time hiding icon app
+                    </h1>
+                  </div>
+
+                  <div class="content-box-vesion">
+                    <h2>beta 3</h2>
+                    <h1>
+                      • Added more icon packs<br />
+                      • Added time showing icon app
                     </h1>
                   </div>
                 </div>
@@ -1109,6 +1117,10 @@
                     />
                   </svg>
                 </div>
+                <input type="file" id="uploadConfig" accept=".txt" />
+                <div class="setting-item" id="uploadFileTXT">
+                  <div class="setting-title">upload animation file .txt</div>
+                </div>
 
                 <div class="app4app" id="app4UnlockAnimation">
                   <div class="back-button" id="back_UnlockAnimation">
@@ -1162,11 +1174,20 @@
                     <div class="item_unlock_anim" data-anim="3" data-group="3">
                       Zoom in by layer
                     </div>
+                    <div class="item_unlock_anim" data-anim="3" data-group="2">
+                      Zoom in 1
+                    </div>
                     <div class="item_unlock_anim" data-anim="2" data-group="2">
-                      Zoom in
+                      Zoom in 2
                     </div>
                     <div class="item_unlock_anim" data-anim="1" data-group="2">
                       Zoom out
+                    </div>
+                    <div class="item_unlock_anim" data-anim="5" data-group="2">
+                      Fly up 1
+                    </div>
+                    <div class="item_unlock_anim" data-anim="5" data-group="3">
+                      Fly up 2
                     </div>
                   </div>
                 </div>
@@ -1542,6 +1563,33 @@
                         max="1"
                         step="0.01"
                         value="0"
+                      />
+                    </div>
+
+                    <div class="section">
+                      <h4>Time showing icon when closing app</h4>
+                      <div class="label">
+                        Time: <span id="timeShowingIconVal">0.05</span>s
+                      </div>
+                      <input
+                        type="range"
+                        id="timeShowingIcon"
+                        min="0"
+                        max="0.6"
+                        step="0.01"
+                        value="0.05"
+                      />
+
+                      <div class="label">
+                        Delay time: <span id="delayShowingIconVal">0.3</span>s
+                      </div>
+                      <input
+                        type="range"
+                        id="delayShowingIcon"
+                        min="0"
+                        max="0.5"
+                        step="0.01"
+                        value="0.3"
                       />
                     </div>
                   </div>
@@ -2638,25 +2686,25 @@
                         <div
                           class="mini_icon"
                           style="
-                            --bg--mini-icon: url('originos_data/hype_icon/system_settings.png');
+                            --bg--mini-icon: url('originos_data/iconPacks/hype_icon/system_settings.png');
                           "
                         ></div>
                         <div
                           class="mini_icon"
                           style="
-                            --bg--mini-icon: url('originos_data/hype_icon/system_music.png');
+                            --bg--mini-icon: url('originos_data/iconPacks/hype_icon/system_music.png');
                           "
                         ></div>
                         <div
                           class="mini_icon"
                           style="
-                            --bg--mini-icon: url('originos_data/hype_icon/system_filemanager.png');
+                            --bg--mini-icon: url('originos_data/iconPacks/hype_icon/system_filemanager.png');
                           "
                         ></div>
                         <div
                           class="mini_icon"
                           style="
-                            --bg--mini-icon: url('originos_data/hype_icon/system_calculator.png');
+                            --bg--mini-icon: url('originos_data/iconPacks/hype_icon/system_calculator.png');
                           "
                         ></div>
                       </div>
@@ -2668,25 +2716,25 @@
                         <div
                           class="mini_icon"
                           style="
-                            --bg--mini-icon: url('originos_data/i_icon/settings.png');
+                            --bg--mini-icon: url('originos_data/iconPacks/i_icon/settings.png');
                           "
                         ></div>
                         <div
                           class="mini_icon"
                           style="
-                            --bg--mini-icon: url('originos_data/i_icon/music.png');
+                            --bg--mini-icon: url('originos_data/iconPacks/i_icon/music.png');
                           "
                         ></div>
                         <div
                           class="mini_icon"
                           style="
-                            --bg--mini-icon: url('originos_data/i_icon/files.png');
+                            --bg--mini-icon: url('originos_data/iconPacks/i_icon/files.png');
                           "
                         ></div>
                         <div
                           class="mini_icon"
                           style="
-                            --bg--mini-icon: url('originos_data/i_icon/calculator.png');
+                            --bg--mini-icon: url('originos_data/iconPacks/i_icon/calculator.png');
                           "
                         ></div>
                       </div>
@@ -2698,25 +2746,25 @@
                         <div
                           class="mini_icon"
                           style="
-                            --bg--mini-icon: url('originos_data/o_icon/settings.png');
+                            --bg--mini-icon: url('originos_data/iconPacks/o_icon/settings.png');
                           "
                         ></div>
                         <div
                           class="mini_icon"
                           style="
-                            --bg--mini-icon: url('originos_data/o_icon/music.png');
+                            --bg--mini-icon: url('originos_data/iconPacks/o_icon/music.png');
                           "
                         ></div>
                         <div
                           class="mini_icon"
                           style="
-                            --bg--mini-icon: url('originos_data/o_icon/files.png');
+                            --bg--mini-icon: url('originos_data/iconPacks/o_icon/files.png');
                           "
                         ></div>
                         <div
                           class="mini_icon"
                           style="
-                            --bg--mini-icon: url('originos_data/o_icon/calculator.png');
+                            --bg--mini-icon: url('originos_data/iconPacks/o_icon/calculator.png');
                           "
                         ></div>
                       </div>
@@ -2728,25 +2776,25 @@
                         <div
                           class="mini_icon"
                           style="
-                            --bg--mini-icon: url('originos_data/oui_icon/settings.png');
+                            --bg--mini-icon: url('originos_data/iconPacks/oui_icon/settings.png');
                           "
                         ></div>
                         <div
                           class="mini_icon"
                           style="
-                            --bg--mini-icon: url('originos_data/oui_icon/music.png');
+                            --bg--mini-icon: url('originos_data/iconPacks/oui_icon/music.png');
                           "
                         ></div>
                         <div
                           class="mini_icon"
                           style="
-                            --bg--mini-icon: url('originos_data/oui_icon/files.png');
+                            --bg--mini-icon: url('originos_data/iconPacks/oui_icon/files.png');
                           "
                         ></div>
                         <div
                           class="mini_icon"
                           style="
-                            --bg--mini-icon: url('originos_data/oui_icon/calculator.png');
+                            --bg--mini-icon: url('originos_data/iconPacks/oui_icon/calculator.png');
                           "
                         ></div>
                       </div>
@@ -2758,29 +2806,123 @@
                         <div
                           class="mini_icon"
                           style="
-                            --bg--mini-icon: url('originos_data/harmonyos_icon/settings.png');
+                            --bg--mini-icon: url('originos_data/iconPacks/harmonyos_icon/settings.png');
                           "
                         ></div>
                         <div
                           class="mini_icon"
                           style="
-                            --bg--mini-icon: url('originos_data/harmonyos_icon/music.png');
+                            --bg--mini-icon: url('originos_data/iconPacks/harmonyos_icon/music.png');
                           "
                         ></div>
                         <div
                           class="mini_icon"
                           style="
-                            --bg--mini-icon: url('originos_data/harmonyos_icon/files.png');
+                            --bg--mini-icon: url('originos_data/iconPacks/harmonyos_icon/files.png');
                           "
                         ></div>
                         <div
                           class="mini_icon"
                           style="
-                            --bg--mini-icon: url('originos_data/harmonyos_icon/calculator.png');
+                            --bg--mini-icon: url('originos_data/iconPacks/harmonyos_icon/calculator.png');
                           "
                         ></div>
                       </div>
                       <div class="icon_label">HarmonyOS</div>
+                    </div>
+
+                    <div class="icon_item" onclick="icon_ios26_light1()">
+                      <div class="box_icon" id="i26Light1">
+                        <div
+                          class="mini_icon"
+                          style="
+                            --bg--mini-icon: url('originos_data/iconPacks/i26Light1/settings.png');
+                          "
+                        ></div>
+                        <div
+                          class="mini_icon"
+                          style="
+                            --bg--mini-icon: url('originos_data/iconPacks/i26Light1/music.png');
+                          "
+                        ></div>
+                        <div
+                          class="mini_icon"
+                          style="
+                            --bg--mini-icon: url('originos_data/iconPacks/i26Light1/files.png');
+                          "
+                        ></div>
+                        <div
+                          class="mini_icon"
+                          style="
+                            --bg--mini-icon: url('originos_data/iconPacks/i26Light1/calculator.png');
+                          "
+                        ></div>
+                      </div>
+                      <div class="icon_label">IOS 26 light 1</div>
+                    </div>
+
+                    <div class="icon_item" onclick="icon_ios26_light2()">
+                      <div class="box_icon" id="i26Light2">
+                        <div
+                          class="mini_icon"
+                          style="
+                            --bg--mini-icon: url('originos_data/iconPacks/i26Light2/settings.png');
+                          "
+                        ></div>
+                        <div
+                          class="mini_icon"
+                          style="
+                            --bg--mini-icon: url('originos_data/iconPacks/i26Light2/music.png');
+                          "
+                        ></div>
+                        <div
+                          class="mini_icon"
+                          style="
+                            --bg--mini-icon: url('originos_data/iconPacks/i26Light2/files.png');
+                          "
+                        ></div>
+                        <div
+                          class="mini_icon"
+                          style="
+                            --bg--mini-icon: url('originos_data/iconPacks/i26Light2/calculator.png');
+                          "
+                        ></div>
+                      </div>
+                      <div class="icon_label">IOS 26 light 2</div>
+                    </div>
+
+                    <div class="icon_item" onclick="icon_pixel()">
+                      <div class="box_icon" id="pix_icon">
+                        <div
+                          class="mini_icon"
+                          style="
+                            --bg--mini-icon: url('originos_data/iconPacks/pix_icon/settings.png');
+                            border-radius: 50%;
+                          "
+                        ></div>
+                        <div
+                          class="mini_icon"
+                          style="
+                            --bg--mini-icon: url('originos_data/iconPacks/pix_icon/clock.png');
+                            border-radius: 50%;
+                          "
+                        ></div>
+                        <div
+                          class="mini_icon"
+                          style="
+                            --bg--mini-icon: url('originos_data/iconPacks/pix_icon/files.png');
+                            border-radius: 50%;
+                          "
+                        ></div>
+                        <div
+                          class="mini_icon"
+                          style="
+                            --bg--mini-icon: url('originos_data/iconPacks/pix_icon/calculator.png');
+                            border-radius: 50%;
+                          "
+                        ></div>
+                      </div>
+                      <div class="icon_label">IOS 26 light 2</div>
                     </div>
 
                     <!--more-->
@@ -3445,7 +3587,7 @@
       onclick="if(currentOpeningBtn == document.getElementById('box4')) openApp(3);
       else openApp(4);"
     >
-      V1.5.00 public BETA 2
+      V1.5.00 public BETA 3
     </div>
     <div class="power-button" title="power-button"></div>
 

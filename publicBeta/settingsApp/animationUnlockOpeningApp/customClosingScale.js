@@ -1,3 +1,6 @@
+// Scale Closing =======================
+
+// input & hiển thị time
 const timeScaleClosinginput = document.getElementById("timeScaleClosing");
 const timeScaleClosingVal = document.getElementById("timeScaleClosingVal");
 
@@ -5,7 +8,8 @@ timeScaleClosinginput.value =
   parseFloat(localStorage.getItem("timeScaleClosing")) || 0.5;
 timeScaleClosingVal.textContent =
   parseFloat(localStorage.getItem("timeScaleClosing")) || 0.5;
-timeScaleClosinginput.addEventListener("input", (e) => {
+
+function timeScaleClosinginputEvent(e) {
   const time = parseFloat(e.target.value);
   timeScaleClosing = time * currentSpeed;
 
@@ -19,10 +23,9 @@ timeScaleClosinginput.addEventListener("input", (e) => {
 
   timeScaleClosingVal.textContent = time;
   localStorage.setItem("timeScaleClosing", time);
-});
+}
 
 const previewScaleClosing = document.getElementById("previewScaleClosing");
-
 let loopScaleClosing = true;
 
 previewScaleClosing.style.transition = `all ${timeScaleClosing}s ${cubicScaleClosing}`;
@@ -32,8 +35,7 @@ let idLoopScaleClosing = setInterval(() => {
   loopScaleClosing = !loopScaleClosing;
 }, timeScaleClosing * 1000);
 
-//damping
-
+// damping
 const dampingScaleClosinginput = document.getElementById("dampingScaleClosing");
 const dampingScaleClosingVal = document.getElementById(
   "dampingScaleClosingVal"
@@ -44,7 +46,7 @@ dampingScaleClosinginput.value =
 dampingScaleClosingVal.textContent =
   parseFloat(localStorage.getItem("dampingScaleClosing")) || 0;
 
-dampingScaleClosinginput.addEventListener("input", (e) => {
+function dampingScaleClosinginputEvent(e) {
   const val = parseFloat(e.target.value);
   cubicScaleClosing = `cubic-bezier(.25,.1,${
     parseFloat(localStorage.getItem("easingScaleClosing")) || 0.25
@@ -60,10 +62,9 @@ dampingScaleClosinginput.addEventListener("input", (e) => {
 
   dampingScaleClosingVal.textContent = val;
   localStorage.setItem("dampingScaleClosing", val);
-});
+}
 
 // easing
-
 const easingScaleClosinginput = document.getElementById("easingScaleClosing");
 const easingScaleClosingVal = document.getElementById("easingScaleClosingVal");
 
@@ -79,7 +80,7 @@ easingScaleClosingVal.textContent =
     ? 0.25
     : parseFloat(localStorage.getItem("easingScaleClosing")));
 
-easingScaleClosinginput.addEventListener("input", (e) => {
+function easingScaleClosinginputEvent(e) {
   const val = 1 - parseFloat(e.target.value);
 
   cubicScaleClosing = `cubic-bezier(.25,.1,${val},${
@@ -89,8 +90,6 @@ easingScaleClosinginput.addEventListener("input", (e) => {
   cubicTransformClosing = `cubic-bezier(.25,.1,${val},${
     1 + (parseFloat(localStorage.getItem("dampingTransformClosing")) || 0)
   })`;
-
-  console.log(cubicTransformClosing);
 
   clearInterval(idLoopScaleClosing);
   previewScaleClosing.style.transition = `all ${timeScaleClosing}s ${cubicScaleClosing}`;
@@ -104,4 +103,4 @@ easingScaleClosinginput.addEventListener("input", (e) => {
 
   easingScaleClosingVal.textContent = (1 - val).toFixed(2);
   localStorage.setItem("easingScaleClosing", val);
-});
+}

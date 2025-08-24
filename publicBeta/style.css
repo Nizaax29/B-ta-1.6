@@ -14,8 +14,10 @@
   --bg--wallpaper: url("originos_data/462489103_1400206661384168_7007140902614083639_n.jpg")
     no-repeat center center;
 
-  --bg--timeHidingIcon: 0.3s;
+  --bg--timeHidingIcon: 0.21s;
   --bg--delayHidingIcon: 0s;
+  --bg--timeShowingIcon: 0.21s;
+  --bg--delayShowingIcon: 0.035s;
 }
 html,
 body {
@@ -77,7 +79,10 @@ body::-webkit-scrollbar-thumb:hover {
     rgba(47, 11, 34, 255),
     rgba(147, 111, 134, 255)
   );
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%; /* căn giữa màn hình */
   transform: scale(var(--bg--scale_phone));
   transition: all 0.6s cubic-bezier(0.23, 0.55, 0.54, 0.97), filter 0s;
   z-index: 10220;
@@ -92,6 +97,9 @@ body::-webkit-scrollbar-thumb:hover {
 }
 .area-thanh {
   position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%; /* căn giữa màn hình */
   height: calc(var(--bg--size_height_phone) + 50px);
   width: var(--bg--size_width_phone);
   pointer-events: none;
@@ -203,7 +211,6 @@ body::-webkit-scrollbar-thumb:hover {
   transition: all 0.3s ease;
   z-index: 0;
   opacity: 1;
-  background-size: 110%;
 }
 #previewPositionIcon {
   position: relative;
@@ -840,6 +847,9 @@ body::-webkit-scrollbar-thumb:hover {
   pointer-events: none;
 }
 .app {
+  transition: all var(--bg--timeShowingIcon) ease var(--bg--delayShowingIcon);
+}
+.app.open {
   transition: all var(--bg--timeHidingIcon) ease var(--bg--delayHidingIcon);
 }
 #app4 {

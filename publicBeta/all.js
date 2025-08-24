@@ -157,6 +157,7 @@ let autoHideClickablesTimer = null;
 let hideBlur = null;
 let app = null;
 let currentSpeed = 0.7;
+let currentSpeed700 = 700 * currentSpeed;
 let currentSpeed6 = 0.6 * currentSpeed;
 let currentSpeed5 = 0.5 * currentSpeed;
 let currentSpeed4 = 0.4 * currentSpeed;
@@ -1944,18 +1945,24 @@ function updateSpeedVars(speed) {
   document.getElementById(
     "scaling-box"
   ).style.animation = `scaleUpDown ${duration}s ease-out infinite`;
-  
-let timeHidingIcon = parseFloat(localStorage.getItem("timeHidingIcon"));
-if (isNaN(timeHidingIcon)) {
-    timeHidingIcon = 0.3;
-}
-document.documentElement.style.setProperty("--bg--timeHidingIcon", `${timeHidingIcon * currentSpeed}s`);
 
-let delayHidingIcon = parseFloat(localStorage.getItem("delayHidingIcon"));
-if (isNaN(delayHidingIcon)) {
+  let timeHidingIcon = parseFloat(localStorage.getItem("timeHidingIcon"));
+  if (isNaN(timeHidingIcon)) {
+    timeHidingIcon = 0.3;
+  }
+  document.documentElement.style.setProperty(
+    "--bg--timeHidingIcon",
+    `${timeHidingIcon * currentSpeed}s`
+  );
+
+  let delayHidingIcon = parseFloat(localStorage.getItem("delayHidingIcon"));
+  if (isNaN(delayHidingIcon)) {
     delayHidingIcon = 0;
-}
-document.documentElement.style.setProperty("--bg--delayHidingIcon", `${delayHidingIcon * currentSpeed}s`);
+  }
+  document.documentElement.style.setProperty(
+    "--bg--delayHidingIcon",
+    `${delayHidingIcon * currentSpeed}s`
+  );
 }
 
 let animation = lottie.loadAnimation({
@@ -2345,4 +2352,33 @@ function openApp(idApp) {
     hideAllClickables();
     app.style.pointerEvents = "auto";
   }
+}
+
+function updatePhoneScale() {
+  const defaultHeight = 700 + 150;
+  const defaultWidth = 330 + 150;
+
+  // Lấy kích thước viewport thực (không tính thanh địa chỉ)
+  const vh = window.visualViewport
+    ? window.visualViewport.height
+    : window.innerHeight;
+  const vw = window.visualViewport
+    ? window.visualViewport.width
+    : window.innerWidth;
+
+  const scaleH = vh / defaultHeight;
+  const scaleW = vw / defaultWidth;
+
+  const scale = Math.min(scaleH, scaleW);
+
+  document.documentElement.style.setProperty(
+    "--bg--scale_phone",
+    scale.toFixed(3)
+  );
+}
+
+updatePhoneScale();
+window.addEventListener("resize", updatePhoneScale);
+if (window.visualViewport) {
+  window.visualViewport.addEventListener("resize", updatePhoneScale);
 }

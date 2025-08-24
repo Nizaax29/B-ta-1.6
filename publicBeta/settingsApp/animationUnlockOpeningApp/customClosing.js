@@ -9,7 +9,8 @@ timeTransformClosinginput.value =
   parseFloat(localStorage.getItem("timeTransformClosing")) || 0.5;
 timeTransformClosingVal.textContent =
   parseFloat(localStorage.getItem("timeTransformClosing")) || 0.5;
-timeTransformClosinginput.addEventListener("input", (e) => {
+
+function timeTransformClosinginputEvent(e) {
   const time = parseFloat(e.target.value);
   timeTransformClosing = time * currentSpeed;
 
@@ -24,7 +25,7 @@ timeTransformClosinginput.addEventListener("input", (e) => {
 
   timeTransformClosingVal.textContent = time;
   localStorage.setItem("timeTransformClosing", time);
-});
+}
 
 const previewTransformClosing = document.getElementById(
   "previewTransformClosing"
@@ -53,7 +54,7 @@ dampingTransformClosinginput.value =
 dampingTransformClosingVal.textContent =
   parseFloat(localStorage.getItem("dampingTransformClosing")) || 0;
 
-dampingTransformClosinginput.addEventListener("input", (e) => {
+function dampingTransformClosinginputEvent(e) {
   const val = parseFloat(e.target.value);
 
   cubicTransformClosing = `cubic-bezier(.25,.1,${
@@ -71,15 +72,34 @@ dampingTransformClosinginput.addEventListener("input", (e) => {
 
   dampingTransformClosingVal.textContent = val;
   localStorage.setItem("dampingTransformClosing", val);
-});
+}
 
 const reset_anim_close_app_btn = document.getElementById(
   "reset_anim_close_app_btn"
 );
-reset_anim_close_app_btn.addEventListener(
-  "click",
-  resetBtnClosingAppAnimCustom
-);
+
+const timeShowingIcon = document.getElementById("timeShowingIcon");
+const timeShowingIconVal = document.getElementById("timeShowingIconVal");
+
+const delayShowingIcon = document.getElementById("delayShowingIcon");
+const delayShowingIconVal = document.getElementById("delayShowingIconVal");
+
+// Hàm riêng cho time
+function updateTimeShowingIcon() {
+  const val = parseFloat(timeShowingIcon.value).toFixed(2);
+  timeShowingIconVal.textContent = val;
+  root.style.setProperty("--bg--timeShowingIcon", `${val * currentSpeed}s`);
+  localStorage.setItem("timeShowingIcon", `${val}`);
+}
+
+// Hàm riêng cho delay
+function updateDelayShowingIcon() {
+  const val = parseFloat(delayShowingIcon.value).toFixed(2);
+  delayShowingIconVal.textContent = val;
+  root.style.setProperty("--bg--delayShowingIcon", `${val * currentSpeed}s`);
+  localStorage.setItem("delayShowingIcon", `${val}`);
+}
+
 function resetBtnClosingAppAnimCustom() {
   const valTimeTransform = 0.5;
   timeTransformClosing = valTimeTransform * currentSpeed;
@@ -150,4 +170,72 @@ function resetBtnClosingAppAnimCustom() {
 
   easingScaleClosingVal.textContent = 0.75;
   localStorage.setItem("easingScaleClosing", valeasing.toFixed(2));
+}
+function addEventCustomSclosing() {
+  // transform
+  timeTransformClosinginput.addEventListener(
+    "input",
+    timeTransformClosinginputEvent
+  );
+  dampingTransformClosinginput.addEventListener(
+    "input",
+    dampingTransformClosinginputEvent
+  );
+
+  // scale
+  timeScaleClosinginput.addEventListener("input", timeScaleClosinginputEvent);
+  dampingScaleClosinginput.addEventListener(
+    "input",
+    dampingScaleClosinginputEvent
+  );
+  easingScaleClosinginput.addEventListener(
+    "input",
+    easingScaleClosinginputEvent
+  );
+
+  // icon
+  timeShowingIcon.addEventListener("input", updateTimeShowingIcon);
+  delayShowingIcon.addEventListener("input", updateDelayShowingIcon);
+
+  // reset
+  reset_anim_close_app_btn.addEventListener(
+    "click",
+    resetBtnClosingAppAnimCustom
+  );
+}
+
+function removeEventCustomSclosing() {
+  // transform
+  timeTransformClosinginput.removeEventListener(
+    "input",
+    timeTransformClosinginputEvent
+  );
+  dampingTransformClosinginput.removeEventListener(
+    "input",
+    dampingTransformClosinginputEvent
+  );
+
+  // scale
+  timeScaleClosinginput.removeEventListener(
+    "input",
+    timeScaleClosinginputEvent
+  );
+  dampingScaleClosinginput.removeEventListener(
+    "input",
+    dampingScaleClosinginputEvent
+  );
+  easingScaleClosinginput.removeEventListener(
+    "input",
+    easingScaleClosinginputEvent
+  );
+
+  // icon
+  timeShowingIcon.removeEventListener("input", updateTimeShowingIcon);
+  delayShowingIcon.removeEventListener("input", updateDelayShowingIcon);
+
+  // reset
+  reset_anim_close_app_btn.removeEventListener(
+    "click",
+    resetBtnClosingAppAnimCustom
+  );
 }

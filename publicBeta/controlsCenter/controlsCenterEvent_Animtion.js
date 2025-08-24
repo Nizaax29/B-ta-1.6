@@ -81,7 +81,6 @@ function toggleItemControlsCenter(event) {
 }
 
 function openEditControlsCenterSettingEvent() {
-  closeControlsCenter();
   document.getElementById("scaling-box").style.animation = "none";
 
   theme_option.style.pointerEvents =
@@ -140,9 +139,9 @@ function openEditControlsCenterSettingEvent() {
   showPopup_open_close_noanim(app4_more_animation);
   showPopup_open_close_noanim(app4ControlsCenterAnim);
   openApp(4);
+  closeControlsCenter();
 }
 function openSettingsApp() {
-  closeControlsCenter();
   document.getElementById("scaling-box").style.animation = "none";
 
   theme_option.style.pointerEvents =
@@ -183,6 +182,7 @@ function openSettingsApp() {
   hideBorderRadiusSystem();
 
   openApp(4);
+  closeControlsCenter();
 }
 
 let idTimeOutLpControlsCenterEvent = null;

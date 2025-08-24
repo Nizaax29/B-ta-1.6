@@ -378,7 +378,6 @@ function addSwipeEvents() {
   document.addEventListener("mousemove", mouseMoveHandler);
   document.addEventListener("mouseup", mouseUpHandler);
 }
-addSwipeEvents()
 
 // Animation hiển thị các nút
 function showKeys_password() {

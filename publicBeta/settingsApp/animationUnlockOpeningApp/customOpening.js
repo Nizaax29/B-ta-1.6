@@ -359,3 +359,206 @@ function removeEventCustomOpening() {
     .getElementById("reset_anim_open_app_btn")
     .removeEventListener("click", resetAnimOpenAppBtnEvent);
 }
+
+function animationCustomByTXT({
+  // Closing Transform closing
+  valTimeTransform = 0.5,
+  valDampingTransform = 0,
+
+  // Closing Scale closing
+  timeScale = 0.5,
+  valDampingScale = 0,
+
+  // Easing closing
+  valEasing = 0.25,
+  easingScaleClosing = 1 - valEasing,
+
+  // Opening App
+  time_allTmp = 0.25,
+  valScaleApp = 86,
+  valScaleWallpaper = 110,
+  cubic_ratioParam = "cubic-bezier(0.05,0.55,0.2,0.95)",
+  cubic_allParam = "cubic-bezier(0.15,0.45,0.45,0.85)",
+
+  timeHidingIconAppTmp = 0.3,
+  delayHidingIconAppTmp = 0,
+
+  timeShowingIconAppTmp = 0.3,
+  delayShowingIconAppTmp = 0.05,
+  positionIconOpening = "top",
+  sizeIconOpening = "100%",
+} = {}) {
+  document.querySelectorAll(".itemScrollIconPosition").forEach((el) => {
+    el.classList.remove("active");
+  });
+
+  document.querySelectorAll(".box").forEach((box) => {
+    box.style.setProperty("--bg--sizeIcon", sizeIconOpening);
+    box.style.setProperty("--bg--positionIcon", positionIconOpening);
+  });
+  previewPositionIcon.style.setProperty("--bg--sizeIcon", sizeIconOpening);
+  previewPositionIcon.style.setProperty(
+    "--bg--positionIcon",
+    positionIconOpening
+  );
+
+  localStorage.setItem("sizeIcon", sizeIconOpening);
+  localStorage.setItem("positionIcon", positionIconOpening);
+
+  const root = document.documentElement;
+  // ---------------- Closing Transform ----------------
+  timeTransformClosing = valTimeTransform * currentSpeed;
+  timeTransformClosingVal.textContent = valTimeTransform;
+  timeTransformClosinginput.value = valTimeTransform;
+
+  cubicTransformClosing = `cubic-bezier(.25,.1,.25,${1 + valDampingTransform})`;
+  dampingTransformClosinginput.value = valDampingTransform;
+  dampingTransformClosingVal.textContent = valDampingTransform;
+
+  localStorage.setItem("timeTransformClosing", valTimeTransform);
+  localStorage.setItem("dampingTransformClosing", valDampingTransform);
+
+  clearInterval(idLoopTransformClosing);
+  previewTransformClosing.style.transition = `all ${timeTransformClosing}s ${cubicTransformClosing}`;
+  idLoopTransformClosing = setInterval(() => {
+    previewTransformClosing.classList.toggle("animation");
+    loopTransformClosing = !loopTransformClosing;
+  }, timeTransformClosing * 1000);
+
+  // ---------------- Closing Scale ----------------
+  timeScaleClosing = timeScale * currentSpeed;
+  timeScaleClosingVal.textContent = timeScale;
+  timeScaleClosinginput.value = timeScale;
+
+  cubicScaleClosing = `cubic-bezier(.25,.1,.25,${1 + valDampingScale})`;
+  dampingScaleClosinginput.value = valDampingScale;
+  dampingScaleClosingVal.textContent = valDampingScale;
+
+  localStorage.setItem("timeScaleClosing", timeScale);
+  localStorage.setItem("dampingScaleClosing", valDampingScale);
+
+  clearInterval(idLoopScaleClosing);
+  previewScaleClosing.style.transition = `all ${timeScaleClosing}s ${cubicScaleClosing}`;
+  idLoopScaleClosing = setInterval(() => {
+    previewScaleClosing.classList.toggle("animation");
+    loopScaleClosing = !loopScaleClosing;
+  }, timeScaleClosing * 1000);
+
+  // ---------------- Easing ----------------
+  easingScaleClosinginput.value = easingScaleClosing;
+
+  cubicScaleClosing = `cubic-bezier(.25,.1,${valEasing},${
+    1 + valDampingScale
+  })`;
+  cubicTransformClosing = `cubic-bezier(.25,.1,${valEasing},${
+    1 + valDampingTransform
+  })`;
+
+  previewScaleClosing.style.transition = `all ${timeScaleClosing}s ${cubicScaleClosing}`;
+  previewTransformClosing.style.transition = `all ${timeTransformClosing}s ${cubicTransformClosing}`;
+
+  clearInterval(idLoopScaleClosing);
+  idLoopScaleClosing = setInterval(() => {
+    previewScaleClosing.classList.toggle("animation");
+    loopScaleClosing = !loopScaleClosing;
+  }, (timeScaleClosing + 0.1) * 1000);
+
+  easingScaleClosingVal.textContent = easingScaleClosing;
+  localStorage.setItem("easingScaleClosing", valEasing.toFixed(2));
+
+  // ---------------- Opening App ----------------
+  time_all = time_allTmp;
+  time_opening_app = time_all * currentSpeed;
+  time_aspect_ratio_app = time_all * currentSpeed * 0.9;
+
+  // Giờ lấy cubic từ tham số
+  cubic_ratio = cubic_ratioParam;
+  cubic_all = cubic_allParam;
+
+  saveSettings();
+
+  document.getElementById("timeAll").value = time_all;
+  document.getElementById("timeAllVal").textContent = time_all;
+
+  updatePreviewTransition(true);
+  updateBezierGraphs();
+
+  // Scale App
+  scaleAllAppinput.value = valScaleApp;
+  scaleAllAppVal.textContent = valScaleApp;
+  document.getElementById("scaleAllAppPreivew").style.scale = `${valScaleApp}%`;
+  scaleAllApp = valScaleApp;
+  scaleAllAppReverse = 100 / valScaleApp;
+  localStorage.setItem("scaleAllApp", valScaleApp);
+
+  if (currentOpeningBtn) {
+    currentOpeningBtn.style.transition = "none";
+    allApp.style.transition = "none";
+    currentOpeningBtn.style.transform = `scale(${scaleAllAppReverse})`;
+    allApp.style.scale = `${valScaleApp}%`;
+    lp.style.scale = `${scaleAllAppReverse}`;
+  }
+
+  // Scale Wallpaper
+  scaleWallpaperAniminput.value = valScaleWallpaper;
+  scaleWallpaperAnimVal.textContent = valScaleWallpaper;
+  document.getElementById(
+    "wallpaperPreviewAnim"
+  ).style.scale = `${valScaleWallpaper}%`;
+  scaleWallpaper = valScaleWallpaper;
+  localStorage.setItem("scaleWallpaperAnim", valScaleWallpaper);
+
+  const timeHidingIconAppOpening = timeHidingIconAppTmp;
+  timeHidingIconVal.textContent = timeHidingIconAppOpening;
+  root.style.setProperty(
+    "--bg--timeHidingIcon",
+    `${timeHidingIconAppOpening * currentSpeed}s`
+  );
+  localStorage.setItem("timeHidingIcon", `${timeHidingIconAppOpening}`);
+
+  const delayHidingIconAppOpening = delayHidingIconAppTmp;
+  delayHidingIconVal.textContent = delayHidingIconAppOpening;
+  root.style.setProperty(
+    "--bg--delayHidingIcon",
+    `${delayHidingIconAppOpening * currentSpeed}s`
+  );
+  localStorage.setItem("delayHidingIcon", `${delayHidingIconAppOpening}`);
+
+  const timeShowingIconAppClosingTmp2 = timeShowingIconAppTmp;
+  timeShowingIconVal.textContent = timeShowingIconAppClosingTmp2;
+  root.style.setProperty(
+    "--bg--timeShowingIcon",
+    `${timeShowingIconAppClosingTmp2 * currentSpeed}s`
+  );
+  localStorage.setItem("timeShowingIcon", `${timeShowingIconAppClosingTmp2}`);
+
+  const delayShowingIconAppClosingTmp2 = delayShowingIconAppTmp;
+  delayShowingIconVal.textContent = delayShowingIconAppClosingTmp2;
+  root.style.setProperty(
+    "--bg--delayShowingIcon",
+    `${delayShowingIconAppClosingTmp2 * currentSpeed}s`
+  );
+  localStorage.setItem("delayShowingIcon", `${delayShowingIconAppClosingTmp2}`);
+}
+
+// chỉnh tất cả
+//animationCustomByTXT({
+//  /* ================= OPEN APP ================= */
+//  time_allTmp: 0.4, // total duration for opening animation (should be between 0.3 - 1)
+//  valScaleApp: 92, // scale value for app when opening (should be between 60 - 100)
+//  valScaleWallpaper: 120, // scale value for wallpaper when opening (should be between 100 - 200)
+//  cubic_ratioParam: "cubic-bezier(.79,-0.25,.12,.95)", // easing curve for app scaling during opening
+//  cubic_allParam: "cubic-bezier(.79,-0.25,.12,.95)", // main easing curve for opening
+//  timeHidingIconAppTmp: 0.4, // time to hide the icon (should be between 0 - 0.5)
+//  delayHidingIconAppTmp: 0, // delay before hiding the icon (should be between 0 - 0.5)
+//
+//  /* ================= CLOSE APP ================= */
+//  valTimeTransform: 0.7, // transform duration when closing (should be between 0.4 - 1)
+//  valDampingTransform: 0.2, // damping factor for transform when closing (should be between 0.1 - 0.25)
+//  timeScale: 0.6, // scale duration when closing (should be between 0.4 - 1)
+//  valDampingScale: 0.15, // damping factor for scale when closing (should be between 0.1 - 0.4)
+//  valEasing: 0.35, // secondary easing factor for closing (should be between 0 - 1)
+
+//  timeShowingIconAppTmp: 0.4, // time to show the icon (should be between 0 - 0.5)
+//  delayShowingIconAppTmp: 0, // delay before showing the icon (should be between 0 - 0.5)
+//});
