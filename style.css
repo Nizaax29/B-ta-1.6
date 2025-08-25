@@ -573,6 +573,19 @@ body::-webkit-scrollbar-thumb:hover {
 .thanh.open {
   display: block;
 }
+#nav2 {
+  position: absolute;
+  width: 100%;
+  bottom: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 12;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 60px;
+  height: 40px;
+}
 .nav {
   position: fixed;
   bottom: 4px;
@@ -594,6 +607,24 @@ body::-webkit-scrollbar-thumb:hover {
   width: 130px;
   height: 6px;
   opacity: 1;
+}
+.allApp {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background: none;
+  transform: scale(1);
+  transition: all 1.5s cubic-bezier(0.07, 1.33, 1, 1);
+  z-index: 3;
+  scale: 1;
+}
+.allApp.open {
+  transform: scale(0.86);
+}
+.allApp.lock {
+  transition: all 1.5s cubic-bezier(0.07, 1.33, 1, 1);
+  transform: scale(2.3) rotateX(10deg);
+  opacity: 0;
 }
 .khayapp {
   position: absolute;
@@ -1169,24 +1200,6 @@ body::-webkit-scrollbar-thumb:hover {
   z-index: 4884;
   font-family: "Noto sans", sans-serif;
   transition: all 0.3s ease-out;
-}
-.allApp {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  background: none;
-  transform: scale(1);
-  transition: all 1.5s cubic-bezier(0.07, 1.33, 1, 1);
-  z-index: 3;
-  scale: 1;
-}
-.allApp.open {
-  transform: scale(0.86);
-}
-.allApp.lock {
-  transition: all 1.5s cubic-bezier(0.07, 1.33, 1, 1);
-  transform: scale(2.3) rotateX(10deg);
-  opacity: 0;
 }
 /* Màn hình loading */
 #loading-screen {
