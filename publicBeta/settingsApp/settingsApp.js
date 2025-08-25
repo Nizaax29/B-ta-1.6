@@ -1746,10 +1746,10 @@ function handleDockBarToggle() {
   dock_bar = this.classList.contains("active") ? 1 : 0;
 
   if (dock_bar) {
-    document.querySelector(".khayapp").style.opacity = 1;
+    document.querySelector(".khayapp").style.display = "";
     localStorage.removeItem("dock_bar_saved");
   } else {
-    document.querySelector(".khayapp").style.opacity = 0;
+    document.querySelector(".khayapp").style.display = "none";
     localStorage.setItem("dock_bar_saved", 1);
   }
 }

@@ -230,7 +230,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   if (localStorage.getItem("dock_bar_saved")) {
     document.getElementById("dock-bar").classList.remove("active");
-    document.querySelector(".khayapp").style.opacity = 0;
+    document.querySelector(".khayapp").style.display = "none";
   }
 
   if (localStorage.getItem("blur_App_saved")) {
