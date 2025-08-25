@@ -224,6 +224,9 @@ function resetBtnClosingAppAnimCustom() {
   maxDragNav.value = 150;
   sensitivityNav = 0.08;
   maxNav = 150;
+
+  localStorage.setItem("sensitivityNavBar", 0.08);
+  localStorage.setItem("maxDragNav", 150);
 }
 function addEventCustomSclosing() {
   // transform

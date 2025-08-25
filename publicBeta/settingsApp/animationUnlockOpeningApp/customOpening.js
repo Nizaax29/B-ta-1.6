@@ -597,6 +597,9 @@ function animationCustomByTXT({
   maxDragNavVal.textContent = maxDragNavValue;
   maxDragNav.value = maxDragNavValue;
   maxNav = maxDragNavValue;
+
+  localStorage.setItem("sensitivityNavBar", sensitivityNavBarValue);
+  localStorage.setItem("maxDragNav", maxDragNavValue);
 }
 
 // chỉnh tất cả

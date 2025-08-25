@@ -2701,6 +2701,28 @@ const allowedKeys = [
   "maxDragNavValue",
 ];
 
+// định nghĩa kiểu dữ liệu cho từng key
+const schema = {
+  time_allTmp: "number",
+  valScaleApp: "number",
+  valScaleWallpaper: "number",
+  cubic_ratioParam: "string",
+  cubic_allParam: "string",
+  timeHidingIconAppTmp: "number",
+  delayHidingIconAppTmp: "number",
+  valTimeTransform: "number",
+  valDampingTransform: "number",
+  timeScale: "number",
+  valDampingScale: "number",
+  valEasing: "number",
+  timeShowingIconAppTmp: "number",
+  delayShowingIconAppTmp: "number",
+  sizeIconOpening: "string",
+  positionIconOpening: "string",
+  sensitivityNavBarValue: "number",
+  maxDragNavValue: "number",
+};
+
 document
   .getElementById("uploadConfig")
   .addEventListener("change", function (e) {
@@ -2732,31 +2754,55 @@ document
             .map((s) => s.trim().replace(/,$/, ""));
 
           if (!allowedKeys.includes(key)) {
-            showPopup1_alert(`❌ keyword \"${key}\" is not supported`);
+            showPopup1_alert(`❌ keyword "${key}" is not supported`);
             this.value = "";
             return;
           }
 
+          const expectedType = schema[key];
           let val;
-          if (rawVal.startsWith('"') && rawVal.endsWith('"')) {
-            val = rawVal.slice(1, -1); // string
-          } else {
+
+          if (expectedType === "number") {
             val = parseFloat(rawVal);
             if (isNaN(val)) {
-              showPopup1_alert(`❌ Invalid value at: ${key}`);
+              showPopup1_alert(`❌ ${key} must be a number`);
               this.value = "";
               return;
             }
+          } else if (expectedType === "string") {
+            if (!(rawVal.startsWith('"') && rawVal.endsWith('"'))) {
+              showPopup1_alert(`❌ ${key} must be a string inside quotes`);
+              this.value = "";
+              return;
+            }
+            val = rawVal.slice(1, -1);
+
+            if (
+              val.includes("{") ||
+              val.includes("}") ||
+              val.includes("[") ||
+              val.includes("]")
+            ) {
+              showPopup1_alert(
+                `❌ ${key} string value not allowed to contain {} or []`
+              );
+              this.value = "";
+              return;
+            }
+          } else {
+            showPopup1_alert(`❌ Unsupported type for ${key}`);
+            this.value = "";
+            return;
           }
 
           config[key] = val;
         }
 
-        // chạy config
+        // run
         showPopup2_alert(
-          "are you sure you want to import this txt file, it may break the web?",
-          "continue",
-          "cancel",
+          "Are you sure you want to import this txt file? It may break the web.",
+          "Continue",
+          "Cancel",
           () => {
             animationCustomByTXT(config);
           }
@@ -2798,6 +2844,9 @@ const defaultConfig = {
   delayShowingIconAppTmp: 0.05,
   positionIconOpening: "top",
   sizeIconOpening: "100%",
+
+  sensitivityNavBarValue: 0.08,
+  maxDragNavValue: 150,
 };
 
 const mappingAnimationTXT = {
@@ -2820,6 +2869,8 @@ const mappingAnimationTXT = {
   valEasing: "easingScaleClosing",
   timeShowingIconAppTmp: "timeShowingIcon",
   delayShowingIconAppTmp: "delayShowingIcon",
+  sensitivityNavBarValue: "sensitivityNavBar",
+  maxDragNavValue: "maxDragNav",
 };
 
 document.getElementById("exportConfigBtn").addEventListener("click", () => {
@@ -2831,9 +2882,8 @@ document.getElementById("exportConfigBtn").addEventListener("click", () => {
       const lines = Object.entries(mappingAnimationTXT).map(
         ([exportName, localKey]) => {
           let val = localStorage.getItem(localKey);
-          if (val === null) val = defaultConfig[exportName]; // lấy default nếu chưa có
+          if (val === null) val = defaultConfig[exportName];
 
-          // Nếu là số thì giữ nguyên, nếu không thì thêm ngoặc kép
           const isNumber = !isNaN(parseFloat(val)) && isFinite(val);
           const finalVal = isNumber ? val : `"${val}"`;
 
