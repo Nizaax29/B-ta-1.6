@@ -2697,6 +2697,8 @@ const allowedKeys = [
   "delayShowingIconAppTmp",
   "sizeIconOpening",
   "positionIconOpening",
+  "sensitivityNavBarValue",
+  "maxDragNavValue",
 ];
 
 document
@@ -2706,7 +2708,7 @@ document
     if (!file) return;
 
     if (file.type !== "text/plain") {
-      showPopup1_alert("❌ Chỉ chấp nhận file .txt");
+      showPopup1_alert("❌ Only accept .txt files");
       this.value = ""; // reset input
       return;
     }
@@ -2720,7 +2722,7 @@ document
           .split("\n")
           .map((l) => l.trim())
           .filter((l) => l.length > 0)
-          .map((l) => l.split("//")[0].trim()); // bỏ comment
+          .map((l) => l.split("//")[0].trim()); // remove comment
 
         for (let line of lines) {
           if (!line.includes(":")) continue;
@@ -2730,7 +2732,7 @@ document
             .map((s) => s.trim().replace(/,$/, ""));
 
           if (!allowedKeys.includes(key)) {
-            showPopup1_alert(`❌ Key không hợp lệ: ${key}`);
+            showPopup1_alert(`❌ keyword \"${key}\" is not supported`);
             this.value = "";
             return;
           }
@@ -2741,7 +2743,7 @@ document
           } else {
             val = parseFloat(rawVal);
             if (isNaN(val)) {
-              showPopup1_alert(`❌ Giá trị không hợp lệ tại key: ${key}`);
+              showPopup1_alert(`❌ Invalid value at: ${key}`);
               this.value = "";
               return;
             }
@@ -2751,16 +2753,107 @@ document
         }
 
         // chạy config
-        animationCustomByTXT(config);
+        showPopup2_alert(
+          "are you sure you want to import this txt file, it may break the web?",
+          "continue",
+          "cancel",
+          () => {
+            animationCustomByTXT(config);
+          }
+        );
       } catch (err) {
-        showPopup1_alert("❌ File cấu hình không hợp lệ");
+        showPopup1_alert("❌ Invalid configuration file");
         console.error(err);
       } finally {
-        this.value = ""; // luôn reset input để có thể upload lại
+        this.value = "";
       }
     };
     reader.readAsText(file);
   });
+
+const defaultConfig = {
+  // Closing Transform closing
+  valTimeTransform: 0.5,
+  valDampingTransform: 0,
+
+  // Closing Scale closing
+  timeScale: 0.5,
+  valDampingScale: 0,
+
+  // Easing closing
+  valEasing: 0.25,
+  easingScaleClosing: 1 - 0.25,
+
+  // Opening App
+  time_allTmp: 0.25,
+  valScaleApp: 86,
+  valScaleWallpaper: 110,
+  cubic_ratioParam: "cubic-bezier(0.07,0.74,0.37,0.98)",
+  cubic_allParam: "cubic-bezier(0.25,0.1,0.25,1)",
+
+  timeHidingIconAppTmp: 0.3,
+  delayHidingIconAppTmp: 0,
+
+  timeShowingIconAppTmp: 0.3,
+  delayShowingIconAppTmp: 0.05,
+  positionIconOpening: "top",
+  sizeIconOpening: "100%",
+};
+
+const mappingAnimationTXT = {
+  // ================= OPEN APP =================
+  time_allTmp: "time_all",
+  valScaleApp: "scaleAllApp",
+  valScaleWallpaper: "scaleWallpaperAnim",
+  cubic_ratioParam: "cubic_ratio",
+  cubic_allParam: "cubic_all",
+  timeHidingIconAppTmp: "timeHidingIcon",
+  delayHidingIconAppTmp: "delayHidingIcon",
+  positionIconOpening: "positionIcon",
+  sizeIconOpening: "sizeIcon",
+
+  // ================= CLOSE APP =================
+  valTimeTransform: "timeTransformClosing",
+  valDampingTransform: "dampingTransformClosing",
+  timeScale: "timeScaleClosing",
+  valDampingScale: "dampingScaleClosing",
+  valEasing: "easingScaleClosing",
+  timeShowingIconAppTmp: "timeShowingIcon",
+  delayShowingIconAppTmp: "delayShowingIcon",
+};
+
+document.getElementById("exportConfigBtn").addEventListener("click", () => {
+  showPopup2_alert(
+    "Do you want to download the animation configuration file?",
+    "Download",
+    "Cancel",
+    () => {
+      const lines = Object.entries(mappingAnimationTXT).map(
+        ([exportName, localKey]) => {
+          let val = localStorage.getItem(localKey);
+          if (val === null) val = defaultConfig[exportName]; // lấy default nếu chưa có
+
+          // Nếu là số thì giữ nguyên, nếu không thì thêm ngoặc kép
+          const isNumber = !isNaN(parseFloat(val)) && isFinite(val);
+          const finalVal = isNumber ? val : `"${val}"`;
+
+          return `  ${exportName}: ${finalVal},`;
+        }
+      );
+
+      const fileContent = `const config = {\n${lines.join("\n")}\n};`;
+      const blob = new Blob([fileContent], { type: "text/plain" });
+      const url = URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "animation-config.txt";
+      a.click();
+
+      URL.revokeObjectURL(url);
+    }
+  );
+});
 
 const anim_unlock_btn = document.getElementById("anim_unlock_btn");
 const app4_unlock_animation = document.getElementById("app4UnlockAnimation");

@@ -50,24 +50,24 @@ function initBezier(sectionId, isRatio, cubicInit) {
   }
 
   function drawBezier() {
-    ctx.clearRect(0, 0, 300, 300);
+    ctx.clearRect(0, 0, 260, 260);
     ctx.strokeStyle = "#777";
     ctx.beginPath();
-    ctx.moveTo(0, 300);
-    ctx.lineTo(points.p1.x * 300, points.p1.y * 300);
-    ctx.lineTo(points.p2.x * 300, points.p2.y * 300);
-    ctx.lineTo(300, 0);
+    ctx.moveTo(0, 260);
+    ctx.lineTo(points.p1.x * 260, points.p1.y * 260);
+    ctx.lineTo(points.p2.x * 260, points.p2.y * 260);
+    ctx.lineTo(260, 0);
     ctx.stroke();
 
     ctx.strokeStyle = "#ff9800";
     ctx.beginPath();
-    ctx.moveTo(0, 300);
+    ctx.moveTo(0, 260);
     ctx.bezierCurveTo(
-      points.p1.x * 300,
-      points.p1.y * 300,
-      points.p2.x * 300,
-      points.p2.y * 300,
-      300,
+      points.p1.x * 260,
+      points.p1.y * 260,
+      points.p2.x * 260,
+      points.p2.y * 260,
+      260,
       0
     );
     ctx.stroke();
@@ -87,16 +87,16 @@ function initBezier(sectionId, isRatio, cubicInit) {
   }
 
   function setHandlePosition(handle, point) {
-    handle.style.left = point.x * 300 + "px";
-    handle.style.top = point.y * 300 + "px";
+    handle.style.left = point.x * 260 + "px";
+    handle.style.top = point.y * 260 + "px";
   }
 
   function startDrag(handle, pointName) {
     const move = (e) => {
       let rect = canvas.getBoundingClientRect();
       let x =
-        ((e.touches ? e.touches[0].clientX : e.clientX) - rect.left) / 300;
-      let y = ((e.touches ? e.touches[0].clientY : e.clientY) - rect.top) / 300;
+        ((e.touches ? e.touches[0].clientX : e.clientX) - rect.left) / 260;
+      let y = ((e.touches ? e.touches[0].clientY : e.clientY) - rect.top) / 260;
       points[pointName].x = Math.min(Math.max(x, 0), 1);
       points[pointName].y = Math.min(Math.max(y, 0), 1);
       setHandlePosition(handle, points[pointName]);
@@ -322,6 +322,50 @@ function resetAnimOpenAppBtnEvent(e) {
   scaleWallpaper = valScaleWallpaper;
   scaleWallpaperAnimVal.textContent = valScaleWallpaper;
   localStorage.setItem("scaleWallpaperAnim", valScaleWallpaper);
+
+  const timeHidingIconAppOpening = 0.3;
+  timeHidingIcon.value = timeHidingIconAppOpening;
+  timeHidingIconVal.textContent = timeHidingIconAppOpening;
+  root.style.setProperty(
+    "--bg--timeHidingIcon",
+    `${timeHidingIconAppOpening * currentSpeed}s`
+  );
+  localStorage.setItem("timeHidingIcon", `${timeHidingIconAppOpening}`);
+
+  const delayHidingIconAppOpening = 0;
+  delayHidingIcon.value = delayHidingIconAppOpening;
+  delayHidingIconVal.textContent = delayHidingIconAppOpening;
+  root.style.setProperty(
+    "--bg--delayHidingIcon",
+    `${delayHidingIconAppOpening * currentSpeed}s`
+  );
+  localStorage.setItem("delayHidingIcon", `${delayHidingIconAppOpening}`);
+
+  document.querySelectorAll(".itemScrollIconPosition").forEach((el) => {
+    el.classList.remove("active");
+  });
+
+  document.querySelectorAll(".box").forEach((box) => {
+    box.style.setProperty("--bg--sizeIcon", "100%");
+    box.style.setProperty("--bg--positionIcon", "top");
+  });
+  previewPositionIcon.style.setProperty("--bg--sizeIcon", "100%");
+  previewPositionIcon.style.setProperty("--bg--positionIcon", "top");
+
+  localStorage.setItem("sizeIcon", "100%");
+  localStorage.setItem("positionIcon", "top");
+
+  const valBlur = 20;
+  blurAllAppinput.value = valBlur;
+  blurAllAppVal.textContent = valBlur;
+  document.getElementById("blurAllAppPreivew").style.filter = `blur(15px)`;
+
+  blurCustomOpeing = valBlur;
+  if (localStorage.getItem("blur_App_saved"))
+    lp.style.filter = `blur(${blurCustomOpeing}px)`;
+
+  blurAllAppVal.textContent = valBlur;
+  localStorage.setItem("blurAllApp", valBlur);
 }
 
 function addEventCustomOpening() {
@@ -372,6 +416,8 @@ function animationCustomByTXT({
   // Easing closing
   valEasing = 0.25,
   easingScaleClosing = 1 - valEasing,
+  sensitivityNavBarValue = 0.08,
+  maxDragNavValue = 150,
 
   // Opening App
   time_allTmp = 0.25,
@@ -509,6 +555,7 @@ function animationCustomByTXT({
   localStorage.setItem("scaleWallpaperAnim", valScaleWallpaper);
 
   const timeHidingIconAppOpening = timeHidingIconAppTmp;
+  timeHidingIcon.value = timeHidingIconAppOpening;
   timeHidingIconVal.textContent = timeHidingIconAppOpening;
   root.style.setProperty(
     "--bg--timeHidingIcon",
@@ -517,6 +564,7 @@ function animationCustomByTXT({
   localStorage.setItem("timeHidingIcon", `${timeHidingIconAppOpening}`);
 
   const delayHidingIconAppOpening = delayHidingIconAppTmp;
+  delayHidingIcon.value = delayHidingIconAppTmp;
   delayHidingIconVal.textContent = delayHidingIconAppOpening;
   root.style.setProperty(
     "--bg--delayHidingIcon",
@@ -525,6 +573,7 @@ function animationCustomByTXT({
   localStorage.setItem("delayHidingIcon", `${delayHidingIconAppOpening}`);
 
   const timeShowingIconAppClosingTmp2 = timeShowingIconAppTmp;
+  timeShowingIcon.value = timeShowingIconAppTmp;
   timeShowingIconVal.textContent = timeShowingIconAppClosingTmp2;
   root.style.setProperty(
     "--bg--timeShowingIcon",
@@ -533,12 +582,21 @@ function animationCustomByTXT({
   localStorage.setItem("timeShowingIcon", `${timeShowingIconAppClosingTmp2}`);
 
   const delayShowingIconAppClosingTmp2 = delayShowingIconAppTmp;
+  delayShowingIcon = delayShowingIconAppTmp;
   delayShowingIconVal.textContent = delayShowingIconAppClosingTmp2;
   root.style.setProperty(
     "--bg--delayShowingIcon",
     `${delayShowingIconAppClosingTmp2 * currentSpeed}s`
   );
   localStorage.setItem("delayShowingIcon", `${delayShowingIconAppClosingTmp2}`);
+
+  sensitivityNavBarVal.textContent = sensitivityNavBarValue;
+  sensitivityNavBar.value = sensitivityNavBarValue;
+  sensitivityNav = sensitivityNavBarValue;
+
+  maxDragNavVal.textContent = maxDragNavValue;
+  maxDragNav.value = maxDragNavValue;
+  maxNav = maxDragNavValue;
 }
 
 // chỉnh tất cả

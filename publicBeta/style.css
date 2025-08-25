@@ -196,7 +196,7 @@ body::-webkit-scrollbar-thumb:hover {
   z-index: 1;
   top: 605px;
   scale: 100%;
-  --bg--sizeIcon: cover;
+  --bg--sizeIcon: 100%;
   --bg--positionIcon: top;
 }
 
@@ -216,7 +216,7 @@ body::-webkit-scrollbar-thumb:hover {
   position: relative;
   --bg--originos: url("originos_data/system_calculator.png");
   background-color: #3d4044;
-  --bg--sizeIcon: cover;
+  --bg--sizeIcon: 100%;
   --bg--positionIcon: top;
   height: 100%;
   width: 100%;
@@ -2746,15 +2746,20 @@ input[type="range"] {
 .vesion_text {
   position: fixed;
   top: 110px;
-  left: 8.5%;
   text-align: left;
-  width: 80%;
+  width: 90%;
   font-size: 10px;
   color: var(--bg--color);
-  pointer-events: none;
   z-index: 9999;
   font-family: "Noto sans", sans-serif;
   overflow-y: scroll;
+  height: calc(100% - 150px);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  border-radius: 15px;
+}
+.vesion_text::-webkit-scrollbar {
+  display: none;
 }
 
 .footer-text {
@@ -4660,9 +4665,6 @@ svg {
   filter: blur(5px);
 }
 .sectionForSttingItem {
-  margin-left: 50%;
-  transform: translateX(-50%);
-  width: 95%;
   background: #171717;
   color: white;
 }
@@ -4672,7 +4674,7 @@ svg {
   border-radius: 20px;
   padding: 15px;
   color: white;
-  width: 100%;
+  width: 90%;
   margin-left: 50%;
   transform: translateX(-50%);
   justify-content: center;
@@ -4683,6 +4685,7 @@ svg {
 .section h3 {
   text-align: left;
   width: 90%;
+  font-size: 20px;
 }
 .label {
   margin-top: 10px;
@@ -4690,8 +4693,8 @@ svg {
 }
 .bezier-container {
   position: relative;
-  width: 300px;
-  height: 300px;
+  width: 260px;
+  height: 260px;
   background: #333;
   border-radius: 10px;
   margin-top: 10px;
@@ -4766,37 +4769,29 @@ canvas {
 }
 .all_cubic_custom_opening {
   position: absolute;
-  height: calc(100% - 100px);
-  width: 100%;
-  scale: 0.85;
-  bottom: 50px;
+  height: calc(100% - 120px);
+  width: 90%;
+  scale: 1;
+  bottom: 30px;
   transform-origin: bottom;
   overflow-y: scroll;
   overflow-x: hidden;
-  border-radius: 20px;
-  padding: 20px;
+  border-radius: 15px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
-.all_cubic_custom_opening:first-child {
-  margin-top: 0px;
-  scroll-snap-align: start;
-}
-.all_cubic_custom_opening:last-child {
-  margin-bottom: 0px;
-  scroll-snap-align: end;
+.all_cubic_custom_opening::-webkit-scrollbar {
+  display: none;
 }
 .settingItemNoPosition {
   display: flex;
   align-items: center;
   border-radius: 15px;
   padding: 12px 20px;
-  margin-bottom: 15px;
   max-width: 400px;
   margin: 0 auto 15px;
   transition: all 0.2s;
   position: relative;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 95%;
   justify-content: center;
   background: rgb(23, 23, 23) !important;
 }

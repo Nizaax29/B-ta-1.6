@@ -100,6 +100,35 @@ function updateDelayShowingIcon() {
   localStorage.setItem("delayShowingIcon", `${val}`);
 }
 
+const sensitivityNavBar = document.getElementById("sensitivityNavBar");
+const sensitivityNavBarVal = document.getElementById("sensitivityNavBarVal");
+sensitivityNavBarVal.textContent =
+  parseFloat(localStorage.getItem("sensitivityNavBar")) || 0.08;
+sensitivityNavBar.value =
+  parseFloat(localStorage.getItem("sensitivityNavBar")) || 0.08;
+
+const maxDragNav = document.getElementById("maxDragNav");
+const maxDragNavVal = document.getElementById("maxDragNavVal");
+maxDragNavVal.textContent =
+  parseFloat(localStorage.getItem("maxDragNav")) || 150;
+maxDragNav.value = parseFloat(localStorage.getItem("maxDragNav")) || 150;
+
+// Hàm riêng cho time
+function sensitivityNavBarEvent() {
+  const val = parseFloat(sensitivityNavBar.value).toFixed(2);
+  sensitivityNavBarVal.textContent = val;
+  sensitivityNav = val;
+  localStorage.setItem("sensitivityNavBar", `${val}`);
+}
+
+// Hàm riêng cho delay
+function maxDragNavEvent() {
+  const val = parseFloat(maxDragNav.value).toFixed(2);
+  maxDragNavVal.textContent = val;
+  maxNav = val;
+  localStorage.setItem("maxDragNav", `${val}`);
+}
+
 function resetBtnClosingAppAnimCustom() {
   const valTimeTransform = 0.5;
   timeTransformClosing = valTimeTransform * currentSpeed;
@@ -170,6 +199,31 @@ function resetBtnClosingAppAnimCustom() {
 
   easingScaleClosingVal.textContent = 0.75;
   localStorage.setItem("easingScaleClosing", valeasing.toFixed(2));
+
+  const timeShowingIconAppClosingTmp2 = 0.3;
+  timeShowingIcon.value = 0.3;
+  timeShowingIconVal.textContent = timeShowingIconAppClosingTmp2;
+  root.style.setProperty(
+    "--bg--timeShowingIcon",
+    `${timeShowingIconAppClosingTmp2 * currentSpeed}s`
+  );
+  localStorage.setItem("timeShowingIcon", `${timeShowingIconAppClosingTmp2}`);
+
+  const delayShowingIconAppClosingTmp2 = 0.05;
+  delayShowingIcon.value = 0.05;
+  delayShowingIconVal.textContent = delayShowingIconAppClosingTmp2;
+  root.style.setProperty(
+    "--bg--delayShowingIcon",
+    `${delayShowingIconAppClosingTmp2 * currentSpeed}s`
+  );
+  localStorage.setItem("delayShowingIcon", `${delayShowingIconAppClosingTmp2}`);
+
+  sensitivityNavBarVal.textContent = 0.08;
+  sensitivityNavBar.value = 0.08;
+  maxDragNavVal.textContent = 150;
+  maxDragNav.value = 150;
+  sensitivityNav = 0.08;
+  maxNav = 150;
 }
 function addEventCustomSclosing() {
   // transform
@@ -196,6 +250,9 @@ function addEventCustomSclosing() {
   // icon
   timeShowingIcon.addEventListener("input", updateTimeShowingIcon);
   delayShowingIcon.addEventListener("input", updateDelayShowingIcon);
+
+  sensitivityNavBar.addEventListener("input", sensitivityNavBarEvent);
+  maxDragNav.addEventListener("input", maxDragNavEvent);
 
   // reset
   reset_anim_close_app_btn.addEventListener(
@@ -228,6 +285,9 @@ function removeEventCustomSclosing() {
     "input",
     easingScaleClosinginputEvent
   );
+
+  sensitivityNavBar.removeEventListener("input", sensitivityNavBarEvent);
+  maxDragNav.removeEventListener("input", maxDragNavEvent);
 
   // icon
   timeShowingIcon.removeEventListener("input", updateTimeShowingIcon);

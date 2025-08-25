@@ -56,7 +56,7 @@
   <body>
     <div id="loading-screen">
       <div class="spinner"></div>
-      <p>Loading OriginOS V1.5.00 BETA 4</p>
+      <p>Loading OriginOS V1.5.00 BETA 5</p>
       <p>by: Quandz24</p>
       <p id="lolhaha">tiktok: @sungsamtech - @._naq.</p>
     </div>
@@ -879,7 +879,7 @@
               </div>
 
               <div class="aboutI4Item" id="khaysetting1-1">
-                <div class="aboutI4ItemText" id="Vesion">V1.5.00 BETA 4</div>
+                <div class="aboutI4ItemText" id="Vesion">V1.5.00 BETA 5</div>
                 <div class="aboutI4ItemTextSmall">Version</div>
                 <div class="icon_element_red"></div>
               </div>
@@ -999,6 +999,15 @@
                     <h1>
                       • Fixed icon packs name<br />
                       • Fixed dock bar
+                    </h1>
+                  </div>
+
+                  <div class="content-box-vesion">
+                    <h2>beta 5</h2>
+                    <h1>
+                      • Fixed bug reset button<br />
+                      • Added 1 new custom for closing animation<br />
+                      • Added new keywords for animation txt file
                     </h1>
                   </div>
                 </div>
@@ -1125,9 +1134,54 @@
                     />
                   </svg>
                 </div>
-                <input type="file" id="uploadConfig" accept=".txt" />
-                <div class="setting-item" id="uploadFileTXT">
+                <input
+                  type="file"
+                  id="uploadConfig"
+                  accept=".txt"
+                  style="display: none"
+                />
+                <div
+                  class="setting-item"
+                  id="uploadFileTXT"
+                  style="
+                    translate: 0 4px;
+                    border-bottom-left-radius: 0;
+                    border-bottom-right-radius: 0;
+                  "
+                >
                   <div class="setting-title">upload animation file .txt</div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24px"
+                    viewBox="0 -960 960 960"
+                    width="24px"
+                  >
+                    <path
+                      d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z"
+                    />
+                  </svg>
+                </div>
+                <div
+                  class="setting-item"
+                  id="exportConfigBtn"
+                  style="border-top-left-radius: 0; border-top-right-radius: 0"
+                >
+                  <div class="setting-title">
+                    Export animation file .txt
+                    <div class="aboutI4ItemTextSmall" style="text-align: left">
+                      Beta
+                    </div>
+                  </div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24px"
+                    viewBox="0 -960 960 960"
+                    width="24px"
+                  >
+                    <path
+                      d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z"
+                    />
+                  </svg>
                 </div>
 
                 <div class="app4app" id="app4UnlockAnimation">
@@ -1222,7 +1276,7 @@
                       </div>
 
                       <div class="bezier-container" id="bezierAspect">
-                        <canvas width="300" height="300"></canvas>
+                        <canvas width="260" height="260"></canvas>
                         <div class="handle" data-point="p1"></div>
                         <div class="handle" data-point="p2"></div>
                       </div>
@@ -1253,7 +1307,7 @@
                       </div>
 
                       <div class="bezier-container" id="bezierAll">
-                        <canvas width="300" height="300"></canvas>
+                        <canvas width="260" height="260"></canvas>
                         <div class="handle" data-point="p1"></div>
                         <div class="handle" data-point="p2"></div>
                       </div>
@@ -1399,7 +1453,7 @@
                     </div>
 
                     <div class="section">
-                      <h4>Icon position and hiding time when open app</h4>
+                      <h3>Icon position and hiding time when open app</h3>
                       <div class="phonePreviewAll">
                         <div class="open" id="previewPositionIcon"></div>
                       </div>
@@ -1469,7 +1523,7 @@
 
                     <div
                       class="setting-item_volume sectionForSttingItem"
-                      style="margin-top: 10px"
+                      style="margin-top: 10px; margin-bottom: 35px"
                     >
                       <div class="setting-title_volume">Multiple click</div>
                       <div
@@ -1575,7 +1629,7 @@
                     </div>
 
                     <div class="section">
-                      <h4>Time showing icon when closing app</h4>
+                      <h3>Time showing icon when closing app</h3>
                       <div class="label">
                         Time: <span id="timeShowingIconVal">0.05</span>s
                       </div>
@@ -1598,6 +1652,33 @@
                         max="0.5"
                         step="0.01"
                         value="0.3"
+                      />
+                    </div>
+
+                    <div class="section">
+                      <h3>Navigation bar sensitivity and maximum drag</h3>
+                      <div class="label">
+                        sensitivity: <span id="sensitivityNavBarVal">0.08</span>
+                      </div>
+                      <input
+                        type="range"
+                        id="sensitivityNavBar"
+                        min="0"
+                        max="0.2"
+                        step="0.01"
+                        value="0.08"
+                      />
+
+                      <div class="label">
+                        maximum drag: <span id="maxDragNavVal">150</span>px
+                      </div>
+                      <input
+                        type="range"
+                        id="maxDragNav"
+                        min="100"
+                        max="260"
+                        step="0.01"
+                        value="150"
                       />
                     </div>
                   </div>
@@ -3593,7 +3674,7 @@
         pointer-events: none;
       "
     >
-      V1.5.00 public BETA 4
+      V1.5.00 public BETA 5
     </div>
     <div class="power-button" title="power-button"></div>
 

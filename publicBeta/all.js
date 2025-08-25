@@ -294,11 +294,14 @@ function closePopup() {
 
 target.innerText += "kT";
 
+let sensitivityNav = localStorage.getItem("sensitivityNavBar") || 0.08;
+let maxNav = localStorage.getItem("maxDragNav") || 150;
+
 function updateTransform(y, x) {
   y = Math.max(0, y);
-  y = Math.min(150, y);
+  y = Math.min(maxNav, y);
 
-  currentOpeningBtn.style.transition = `all 0.08s`;
+  currentOpeningBtn.style.transition = `all ${sensitivityNav}s`;
   currentOpeningBtn.style.transform = `translateX(${x}px) translateY(${-y}px) scale(${
     scaleAllAppReverse - y / 250
   })`;
@@ -2042,10 +2045,10 @@ function updateRotation() {
     translateX(${-ratio * 80}px)`;
     item.style.zIndex = z;
   });
+  updatePhoneScale();
 }
-
+updateRotation();
 row.addEventListener("scroll", updateRotation);
-window.addEventListener("load", updateRotation);
 window.addEventListener("resize", updateRotation);
 
 function removeWithFade(elementOrId, duration = 500) {
@@ -2377,8 +2380,6 @@ function updatePhoneScale() {
   );
 }
 
-updatePhoneScale();
-window.addEventListener("resize", updatePhoneScale);
 if (window.visualViewport) {
   window.visualViewport.addEventListener("resize", updatePhoneScale);
 }
