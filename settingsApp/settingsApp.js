@@ -2517,6 +2517,7 @@ function restoreIconPack() {
   else if (pack === "i26Light2") icon_ios26_light2();
   else if (pack === "i26Light1") icon_ios26_light1();
   else if (pack === "pixel") icon_pixel();
+  else if (pack === "nothing") icon_nothing();
   else icon_originos();
 }
 
