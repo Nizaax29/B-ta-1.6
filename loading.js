@@ -544,12 +544,6 @@ window.addEventListener("DOMContentLoaded", () => {
   //  showPopup_open_close_noanim(app4_unlock_animation);
 });
 
-removeEventListener_setup();
-removeWithFade("setup_screenid_setup");
-document.getElementById("setup_screenid_setup").style.display = "none";
-document.getElementById("allApp").style.display = "flex";
-powerbtn.addEventListener("click", powerbtnEvent);
-
 function formatSize(bytes) {
   if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(2) + " KB";
   return (bytes / 1024 / 1024).toFixed(2) + " MB";
