@@ -54,7 +54,6 @@ function initOriginDB(callbackWhenReady) {
 
   request.onsuccess = function (event) {
     db = event.target.result;
-    console.log("✅ OriginDB sẵn sàng");
     if (typeof callbackWhenReady === "function") callbackWhenReady();
   };
 

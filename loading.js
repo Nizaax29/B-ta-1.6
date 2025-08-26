@@ -39,8 +39,7 @@ function startAnimation_setup() {
   clicke_setup.style.opacity = 0;
   logo_setup.style.transition = "all 0.3s";
   logo_setup.style.opacity = 0;
-  notes_setup.style.transition =
-    "all 0.7s cubic-bezier(0.77, -0.1, 0.79, -0.52)";
+  notes_setup.style.transition = "all 0.3s ease 0.4s";
   notes_setup.style.opacity = 1;
 }
 
@@ -48,11 +47,9 @@ function resetAnimation_setup() {
   box0_setup.classList.remove("anim");
   box1_setup.classList.remove("anim");
   box2_setup.classList.remove("anim");
-  clicke_setup.style.transition =
-    "all 0.7s cubic-bezier(0.77, -0.1, 0.79, -0.52)";
+  clicke_setup.style.transition = "all 0.3s ease 0.4s";
   clicke_setup.style.opacity = 1;
-  logo_setup.style.transition =
-    "all 0.7s cubic-bezier(0.77, -0.1, 0.79, -0.52)";
+  logo_setup.style.transition = "all 0.3s ease 0.4s";
   logo_setup.style.opacity = 1;
   notes_setup.style.transition = "all 0.3s";
   notes_setup.style.opacity = 0;
@@ -68,7 +65,9 @@ function removeEventListener_setup() {
   disagreeBtn_setup.removeEventListener("click", resetAnimation_setup);
 }
 
-setTimeout(() => {
+restoreSettings_finger_pass();
+
+window.addEventListener("DOMContentLoaded", () => {
   if (localStorage.getItem("hide_wallpaper_saved")) {
     document.getElementById("Hide-wallPaper").classList.add("active");
     hide_wallpaper = 1;
@@ -117,11 +116,11 @@ setTimeout(() => {
     date_preview.style.color = localStorage.getItem("color_lock_saved");
   }
 
-  const savedSize = localStorage.getItem("fontSize");
-  if (savedSize) {
-    clock_preview.style.fontSize = `${savedSize}px`;
-    lockclock.style.fontSize = `${savedSize}px`;
-    sizeSlider.value = savedSize;
+  const savedSize1 = localStorage.getItem("fontSize");
+  if (savedSize1) {
+    clock_preview.style.fontSize = `${savedSize1}px`;
+    lockclock.style.fontSize = `${savedSize1}px`;
+    sizeSlider.value = savedSize1;
   }
 
   const saved_btn = localStorage.getItem("btn1_2_saved");
@@ -194,7 +193,7 @@ setTimeout(() => {
     }
   }
 
-  scale_icon = localStorage.getItem("scale_icon_saved");
+  scale_icon = localStorage.getItem("scale_icon_saved") || 100;
 
   if (scale_icon) {
     for (let i = 1; i <= 11; i++) {
@@ -229,15 +228,13 @@ setTimeout(() => {
     btnBlue.style.border = "4px solid #f65268";
   }
 
-  const savedDockBar = localStorage.getItem("dock_bar_saved");
-
   if (localStorage.getItem("dock_bar_saved")) {
     document.getElementById("dock-bar").classList.remove("active");
-    document.querySelector(".khayapp").style.opacity = 0;
+    document.querySelector(".khayapp").style.display = "none";
   }
 
   if (localStorage.getItem("blur_App_saved")) {
-    lp.style.filter = "blur(20px)";
+    lp.style.filter = `blur(${blurCustomOpeing}px)`;
     lp.style.display = "flex";
     document.getElementById("blurApp").classList.add("active");
   }
@@ -252,12 +249,6 @@ setTimeout(() => {
     document.getElementById("dark-mode").classList.remove("active");
   }
 
-  en_language();
-}, 300);
-
-restoreSettings_finger_pass();
-
-window.addEventListener("DOMContentLoaded", () => {
   const savedFont = localStorage.getItem("font_lock_saved");
   const savedMin = localStorage.getItem("font_min_lock_saved");
   const savedMax = localStorage.getItem("font_max_lock_saved");
@@ -322,13 +313,8 @@ window.addEventListener("DOMContentLoaded", () => {
   const current_wallpaper_lock_saved = localStorage.getItem(
     "current_wallpaper_lock"
   );
-  if (current_wallpaper_lock_saved) {
+  if (current_wallpaper_lock_saved)
     current_wallpaper_lock = current_wallpaper_lock_saved;
-    console.log(
-      "💾 Đã khôi phục current_wallpaper_lock:",
-      current_wallpaper_lock
-    );
-  }
 
   const savedDisplay_aod = localStorage.getItem("wallpaper_aod2_display");
   const savedOpacity_aod = localStorage.getItem("wallpaper_aod2_opacity");
@@ -363,20 +349,228 @@ window.addEventListener("DOMContentLoaded", () => {
     changeLottieAnimation(savedPath, savedSpeed);
   }
 
+  let volume_click_volume_saved = parseFloat(
+    localStorage.getItem("volume_click_volume")
+  );
+  if (volume_click_volume_saved == 0) volume_click_volume = 0;
+
+  let volume_unlock_volume_saved = parseFloat(
+    localStorage.getItem("volume_unlock_volume")
+  );
+  if (volume_unlock_volume_saved == 0) volume_unlock_volume = 0;
+
+  let volume_charge_volume_saved = parseFloat(
+    localStorage.getItem("volume_charge_volume")
+  );
+  if (volume_charge_volume_saved == 0) volume_charge_volume = 0;
+
+  if (volume_click_volume_saved > 0)
+    toggle_click_volume.classList.add("active");
+  else {
+    phone.removeEventListener("click", clickSound);
+    toggle_click_volume.classList.remove("active");
+  }
+  if (volume_unlock_volume_saved > 0)
+    toggle_unlock_volume.classList.add("active");
+  else toggle_unlock_volume.classList.remove("active");
+  if (volume_charge_volume_saved > 0)
+    toggle_charge_volume.classList.add("active");
+  else toggle_charge_volume.classList.remove("active");
+
   const savedVol = parseFloat(localStorage.getItem("volume_all_volume"));
   if (!isNaN(savedVol)) {
     volume_all_volume = savedVol;
     slider_volume.value = savedVol;
+    updateIndividualVolumes();
   }
 
-  volume_click_volume =
-    parseFloat(localStorage.getItem("volume_click_volume")) || 0;
-  volume_unlock_volume =
-    parseFloat(localStorage.getItem("volume_unlock_volume")) || 1;
-  volume_charge_volume =
-    parseFloat(localStorage.getItem("volume_charge_volume")) || 1;
+  const savedAnim = localStorage.getItem("anim_unlock_saved") || 1;
+  const savedGroup = localStorage.getItem("groups_unlock_saved") || 1;
+  if (savedAnim && savedGroup) {
+    anim_unlock = allAnimUnlock["anim" + savedAnim];
+    groups_anim = allAnimUnlock_GroupAnim["anim" + savedGroup];
 
-  if (volume_click_volume > 0) toggle_click_volume.classList.add("active");
-  if (volume_unlock_volume > 0) toggle_unlock_volume.classList.add("active");
-  if (volume_charge_volume > 0) toggle_charge_volume.classList.add("active");
+    const activeItem = document.querySelector(
+      `[data-anim="${savedAnim}"][data-group="${savedGroup}"]`
+    );
+    if (activeItem) {
+      activeItem.classList.add("active");
+    }
+  }
+
+  if (localStorage.getItem("transformControlCenter")) {
+    document.querySelectorAll(".item_anim_controlsCenter").forEach((el) => {
+      el.classList.remove("active");
+    });
+
+    document
+      .getElementById(
+        `item_anim_controlsCenter_Anim${localStorage.getItem(
+          "transformControlCenter"
+        )}`
+      )
+      .classList.add("active");
+
+    if (localStorage.getItem("transformControlCenter") === "2") {
+      transformControlCenterControlsCenter = transformControlCenter2;
+      timeDelayControlsCenter = 0;
+    } else {
+      transformControlCenterControlsCenter = transformControlCenter1;
+      timeDelayControlsCenter = 0.01;
+    }
+
+    closeControlsCenter();
+  }
+  document.documentElement.style.setProperty(
+    "--bg--border_radius_system",
+    `${parseFloat(localStorage.getItem("borderRadiusSystem")) || 25}px`
+  );
+  borderRadiusSlider.value =
+    parseFloat(localStorage.getItem("borderRadiusSystem")) || 25;
+
+  if (localStorage.getItem("parallelAnimation_saved") == "0") {
+    document
+      .getElementById("parallelAnimationToggle")
+      .classList.remove("active");
+    openPopupFromCurrentButton = function () {
+      showPopup_open_close(app);
+      currentOpeningBtn.style.transition = `all ${time_opening_app}s ${cubic_all}, aspect-ratio ${time_aspect_ratio_app}s ${cubic_ratio}`;
+
+      currentOpeningBtn.classList.add("open");
+      currentOpeningBtn.style.scale = "100%";
+
+      allApp.style.transition =
+        wallpaper.style.transition = `all ${time_opening_app}s cubic-bezier(0.23, 0.55, 0.54, 0.97)`;
+
+      lp.style.transition = `all ${time_opening_app}s cubic-bezier(0.23, 0.55, 0.54, 0.97), opacity ${currentSpeed3}s`;
+      wallpaper.style.scale = `${scaleWallpaper}%`;
+      lp.classList.add("open");
+
+      lp.style.scale = `${scaleAllAppReverse}`;
+      allApp.style.scale = `${scaleAllApp}%`;
+
+      currentOpeningBtn.style.transform = `scale(${scaleAllAppReverse})`;
+
+      nav.style.height = "40px";
+      isMo = true;
+
+      document.querySelectorAll(".box").forEach((box) => {
+        if (box == currentOpeningBtn) return;
+        box.style.transition = "none";
+        void box.offsetWidth;
+        box.classList.remove("open");
+        box.classList.remove("hien");
+      });
+    };
+  }
+
+  if (localStorage.getItem("multipleClickApp_saved") == "0") {
+    document
+      .getElementById("multipleClickAppToggle")
+      .classList.remove("active");
+    multipleClickAppTime = 0;
+  }
+
+  let sizeIcon = localStorage.getItem("sizeIcon");
+  let positionIcon = localStorage.getItem("positionIcon");
+
+  // Nếu chưa có, set mặc định
+  if (!sizeIcon || !positionIcon) {
+    sizeIcon = "cover";
+    positionIcon = "top";
+  }
+
+  // Tìm item khớp và active
+  const defaultItem = document.querySelector(
+    `.itemScrollIconPosition[data-sizeIcon="${sizeIcon}"][data-positionIcon="${positionIcon}"]`
+  );
+
+  if (defaultItem) {
+    defaultItem.classList.add("active");
+  }
+
+  // Áp dụng vào box
+  document.querySelectorAll(".box").forEach((box) => {
+    box.style.setProperty("--bg--sizeIcon", sizeIcon);
+    box.style.setProperty("--bg--positionIcon", positionIcon);
+  });
+  previewPositionIcon.style.setProperty("--bg--sizeIcon", sizeIcon);
+  previewPositionIcon.style.setProperty("--bg--positionIcon", positionIcon);
+
+  if (localStorage.getItem("timeHidingIcon")) {
+    const savedTime = localStorage.getItem("timeHidingIcon");
+    root.style.setProperty(
+      "--bg--timeHidingIcon",
+      `${savedTime * currentSpeed}s`
+    );
+    timeHidingIcon.value = savedTime;
+    timeHidingIconVal.textContent = savedTime;
+  }
+
+  if (localStorage.getItem("delayHidingIcon")) {
+    const savedDelay = localStorage.getItem("delayHidingIcon");
+    root.style.setProperty(
+      "--bg--delayHidingIcon",
+      `${savedDelay * currentSpeed}s`
+    );
+    delayHidingIcon.value = savedDelay;
+    delayHidingIconVal.textContent = savedDelay;
+  }
+
+  if (localStorage.getItem("timeShowingIcon")) {
+    const savedTime = localStorage.getItem("timeShowingIcon");
+    root.style.setProperty(
+      "--bg--timeShowingIcon",
+      `${savedTime * currentSpeed}s`
+    );
+    timeShowingIcon.value = savedTime;
+    timeShowingIconVal.textContent = savedTime;
+  }
+
+  if (localStorage.getItem("delayShowingIcon")) {
+    const savedDelay = localStorage.getItem("delayShowingIcon");
+    root.style.setProperty(
+      "--bg--delayShowingIcon",
+      `${savedDelay * currentSpeed}s`
+    );
+    delayShowingIcon.value = savedDelay;
+    delayShowingIconVal.textContent = savedDelay;
+  }
+
+  lock();
+  //openApp(4);
+  //showPopup_open_close_noanim(app4animation);
+  //showPopup_open_close_noanim(app4_more_animation);
+  //  showPopup_open_close_noanim(app4_unlock_animation);
 });
+
+removeEventListener_setup();
+removeWithFade("setup_screenid_setup");
+document.getElementById("setup_screenid_setup").style.display = "none";
+document.getElementById("allApp").style.display = "flex";
+powerbtn.addEventListener("click", powerbtnEvent);
+
+function formatSize(bytes) {
+  if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(2) + " KB";
+  return (bytes / 1024 / 1024).toFixed(2) + " MB";
+}
+function updateLocalStorageUsage() {
+  let totalUsed = 0;
+
+  for (let key in localStorage) {
+    if (localStorage.hasOwnProperty(key)) {
+      let value = localStorage.getItem(key);
+      totalUsed += key.length + (value ? value.length : 0);
+    }
+  }
+
+  let totalBytes = 5 * 1024 * 1024;
+  let usedBytes = totalUsed;
+
+  if (!isNaN(totalBytes) && !isNaN(usedBytes)) {
+    document.getElementById("storage").textContent = formatSize(totalBytes);
+    document.getElementById("storageUsed").textContent = formatSize(usedBytes);
+  }
+}
+
+updateLocalStorageUsage();

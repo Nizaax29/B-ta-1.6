@@ -93,7 +93,7 @@ keypad_password.appendChild(zero_password);
 // Nút xóa
 const del_password = document.createElement("div");
 del_password.className = "key_password";
-del_password.innerHTML = `<span class="material-icons" style="background: none; height: none; width: none; margin-right: 2px; font-size: 25px;">backspace</span>`;
+del_password.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" height="27px" viewBox="0 -960 960 960" width="27px" fill="#fff"><path d="m456-320 104-104 104 104 56-56-104-104 104-104-56-56-104 104-104-104-56 56 104 104-104 104 56 56Zm-96 160q-19 0-36-8.5T296-192L80-480l216-288q11-15 28-23.5t36-8.5h440q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H360Z"/></svg>`;
 del_password.addEventListener("click", () => {
   if (input_password.length > 0) {
     input_password = input_password.slice(0, -1);
@@ -104,14 +104,7 @@ del_password.addEventListener("click", () => {
     lock_content.style.opacity = `1`;
     swipeHandle.style.opacity = "1";
     // THOÁT GIAO DIỆN NẾU CHƯA NHẬP GÌ
-    show_pass_for_cuslock = false;
-    container_password.style.animation = "fadeOut_password 0.3s ease-out";
-    container_password.addEventListener("animationend", function handler() {
-      container_password.style.display = "none";
-      container_password.style.pointerEvents = "none";
-      container_password.style.animation = "";
-      container_password.removeEventListener("animationend", handler);
-    });
+    removeKeys_password();
   }
 });
 keypad_password.appendChild(del_password);
@@ -187,7 +180,7 @@ function addNumber_password(num) {
 
       setTimeout(() => {
         input_password = "";
-        updateDots_password();
+        updateDots_passwordWithDelayByIndex();
       }, 200);
 
       if (failCount_password >= 2) {
@@ -202,38 +195,55 @@ const fogot_pass_btn = document.getElementById("fogot_password");
 function onThreeFails() {
   fogot_pass_btn.style.display = "block";
   fogot_pass_btn.addEventListener("click", () => {
-    pass_password = "";
-    unlock();
-    tb_system("Password removed successfully");
-    remove_pass_btn.style.display = "none";
-    pass_password = "";
-    stage_crea_pass = 0;
-    input_crea_pass = "";
-    newPass_crea_pass = "";
-    document.getElementById("title_crea_pass").textContent =
-      pass_password === "" ? t("create_new") : t("enter_old");
-    document.getElementById("error_crea_pass").textContent = "";
-    updateDots_crea_pass();
-    hidePopup_open_close(crea_pass);
-    box_pass1.classList.add("off");
-    box_pass2.classList.add("off");
-    pass_icon_btn.style.fill = "#000000";
-    finger_icon_btn.style.fill = "#000000";
-    status_pass1.textContent = box_pass1.classList.contains("off")
-      ? "OFF"
-      : "ON";
-    status_pass2.textContent = box_pass2.classList.contains("off")
-      ? "OFF"
-      : "ON";
-    finger_biometrics = box_pass2.classList.contains("off") ? 0 : 1;
-    localStorage.setItem("finger_saved", finger_biometrics.toString());
-    fogot_pass_btn.style.display = "none";
+    showPopup2_alert(
+      "Are you sure you want to remove password?",
+      "Yes",
+      "No",
+      () => {
+        pass_password = "";
+        unlock();
+        tb_system("Password removed successfully");
+        remove_pass_btn.style.display = "none";
+        pass_password = "";
+        stage_crea_pass = 0;
+        input_crea_pass = "";
+        newPass_crea_pass = "";
+        document.getElementById("title_crea_pass").textContent =
+          pass_password === "" ? t("create_new") : t("enter_old");
+        document.getElementById("error_crea_pass").textContent = "";
+        updateDots_crea_pass();
+        hidePopup_open_close(crea_pass);
+        box_pass1.classList.add("off");
+        box_pass2.classList.add("off");
+        pass_icon_btn.style.fill = "#000000";
+        finger_icon_btn.style.fill = "#000000";
+        status_pass1.textContent = box_pass1.classList.contains("off")
+          ? "OFF"
+          : "ON";
+        status_pass2.textContent = box_pass2.classList.contains("off")
+          ? "OFF"
+          : "ON";
+        finger_biometrics = box_pass2.classList.contains("off") ? 0 : 1;
+        localStorage.setItem("finger_saved", finger_biometrics.toString());
+        fogot_pass_btn.style.display = "none";
+        localStorage.removeItem("pass_saved");
+      },
+      () => {}
+    );
   });
 }
 
 // Cập nhật 6 chấm tròn
 function updateDots_password() {
   dots_password.forEach((dot, index) => {
+    dot.style.setProperty("--delay", `0ms`);
+    dot.classList.toggle("filled_password", index < input_password.length);
+  });
+}
+function updateDots_passwordWithDelayByIndex() {
+  dots_password.forEach((dot, index) => {
+    void dot.offsetWidth;
+    dot.style.setProperty("--delay", `${index * 70}ms`);
     dot.classList.toggle("filled_password", index < input_password.length);
   });
 }
@@ -241,11 +251,14 @@ function updateDots_password() {
 let isDragging_pass = false;
 let startY_pass = 0;
 let currentY_pass = 0;
+//let startTime_pass = 0; // thời gian bắt đầu vuốt
 
 // --- TOUCH ---
 function touchStartHandler(e) {
   isDragging_pass = true;
   startY_pass = e.touches[0].clientY;
+
+  //startTime_pass = performance.now(); // lấy thời gian bắt đầu
 }
 
 function touchMoveHandler(e) {
@@ -263,19 +276,28 @@ function touchMoveHandler(e) {
 }
 
 function touchEndHandler() {
+  if (!isDragging_pass) return;
   isDragging_pass = false;
   const delta_pass = startY_pass - currentY_pass;
+
+  //const time_pass = (performance.now() - startTime_pass) / 1000; // giây
+  // Tính tốc độ vuốt (px/giây)
+  //let speed = delta_pass / time_pass;
+  //speedUnlockHand = Math.min(5, Math.max(0, speed / 1000));
+
   swipeHandle.style.transition = `bottom 0.2s`;
   swipeHandle.style.bottom = "5px";
   lock_content.style.transition = `transform 0.2s`;
   lock_content.style.transform = `translateY(0px)`;
+
   if (delta_pass > 100) {
     swipeHandle.style.opacity = "0";
     lock_content.style.opacity = `0`;
-    container_password.style.animation = "none";
+    clearTimeout(container_password_timeout);
+    container_password.classList.add("show");
     container_password.style.display = "flex";
     container_password.style.pointerEvents = "auto";
-    animateKeys_password();
+    showKeys_password();
     input_password = "";
     updateDots_password();
   } else {
@@ -284,9 +306,12 @@ function touchEndHandler() {
   }
 }
 
+// --- MOUSE ---
 function mouseDownHandler(e) {
   isDragging_pass = true;
   startY_pass = e.clientY;
+
+  //startTime_pass = performance.now();
 }
 
 function mouseMoveHandler(e) {
@@ -307,17 +332,24 @@ function mouseUpHandler() {
   if (!isDragging_pass) return;
   isDragging_pass = false;
   const delta_pass = startY_pass - currentY_pass;
+
+  //const time_pass = (performance.now() - startTime_pass) / 1000; // giây
+  //let speed = delta_pass / time_pass;
+  //speedUnlockHand = Math.min(5, Math.max(0, speed / 1000));
+
   swipeHandle.style.transition = `bottom 0.2s`;
   swipeHandle.style.bottom = "5px";
   lock_content.style.transition = `transform 0.2s`;
   lock_content.style.transform = `translateY(0px)`;
+
   if (delta_pass > 100) {
     swipeHandle.style.opacity = "0";
     lock_content.style.opacity = `0`;
-    container_password.style.animation = "none";
+    clearTimeout(container_password_timeout);
+    container_password.classList.add("show");
     container_password.style.display = "flex";
     container_password.style.pointerEvents = "auto";
-    animateKeys_password();
+    showKeys_password();
     input_password = "";
     updateDots_password();
   } else {
@@ -326,6 +358,7 @@ function mouseUpHandler() {
   }
 }
 
+// --- Event helpers ---
 function removeSwipeEvents() {
   swipeHandle.removeEventListener("touchstart", touchStartHandler);
   swipeHandle.removeEventListener("touchmove", touchMoveHandler);
@@ -346,30 +379,95 @@ function addSwipeEvents() {
   document.addEventListener("mouseup", mouseUpHandler);
 }
 
-addSwipeEvents();
-
 // Animation hiển thị các nút
-function animateKeys_password() {
+function showKeys_password() {
   if (!pass_password) {
     unlock();
     return;
   }
+  addSwipeEvents();
+
+  clearTimeout(container_password_timeout);
+
   container_password.style.display = "flex";
   container_password.style.pointerEvents = "auto";
-  container_password.style.animation = `show_all_pass 0.3s ease-out`;
 
-  for (let i = 0; i <= 9; i++) {
+  container_password.style.transition = `all ${currentSpeed6}s`;
+  container_password.classList.add("show");
+
+  for (let i = 1; i <= 9; i++) {
+    const key = document.getElementById(`key_password${i}`);
+    key.style.transition = `all ${currentSpeed4}s ease ${
+      (i / 35) * currentSpeed
+    }s`;
+    key.offsetHeight;
+    key.classList.add("show");
+  }
+
+  dotsBox_password.classList.remove("shake_password");
+  void dotsBox_password.offsetWidth;
+
+  dotsBox_password.style.transition = `all ${currentSpeed4}s`;
+  dotsBox_password.offsetHeight;
+  dotsBox_password.classList.add("show");
+
+  const key0 = document.getElementById(`key_password0`);
+  key0.style.transition = `all ${currentSpeed4}s ease ${currentSpeed * 0.286}s`;
+  key0.offsetHeight;
+  key0.classList.add("show");
+
+  del_password.style.transition = `all ${currentSpeed4}s ease ${
+    currentSpeed * 0.314
+  }s`;
+  del_password.offsetHeight;
+  del_password.classList.add("show");
+
+  fogot_pass_btn.style.transition = `all ${currentSpeed4}s`;
+  fogot_pass_btn.style.opacity = 1;
+}
+
+let container_password_timeout = null;
+function removeKeys_password() {
+  input_password = "";
+  updateDots_passwordWithDelayByIndex();
+
+  removeSwipeEvents();
+
+  show_pass_for_cuslock = false;
+
+  container_password.style.transition = `all ${currentSpeed6}s`;
+  container_password.classList.remove("show");
+
+  container_password_timeout = setTimeout(() => {
+    container_password.style.display = "none";
+    container_password.style.pointerEvents = "none";
+    container_password.style.animation = "";
+  }, currentSpeed6 * 1000);
+
+  for (let i = 1; i <= 9; i++) {
     const key = document.getElementById(`key_password${i}`);
     if (key) {
-      key.style.animation = `show_pass${i} 1s ease-out forwards`;
+      key.style.transition = `all ${currentSpeed4}s`;
+      key.offsetHeight;
+      key.classList.remove("show");
     }
   }
 
-  del_password.style.animation = `show_pass0 1.2s ease-out forwards`;
-  document.querySelector(
-    ".dots_password"
-  ).style.animation = `show_pass 0.3s ease-out`;
-  keypad_password.style.animation = `show_pass 0.4s ease-out`;
+  const key0 = document.getElementById(`key_password0`);
+  key0.style.transition = `all ${currentSpeed4}s`;
+  key0.offsetHeight;
+  key0.classList.remove("show");
+
+  del_password.style.transition = `all ${currentSpeed4}s`;
+  del_password.offsetHeight;
+  del_password.classList.remove("show");
+
+  dotsBox_password.style.transition = `all ${currentSpeed4}s`;
+  dotsBox_password.offsetHeight;
+  dotsBox_password.classList.remove("show");
+
+  fogot_pass_btn.style.transition = `all ${currentSpeed4}s`;
+  fogot_pass_btn.style.opacity = 0;
 }
 
 if (!pass_password) {
@@ -463,26 +561,38 @@ function handleFullInput_crea_pass() {
 }
 
 remove_pass_btn.addEventListener("click", () => {
-  remove_pass_btn.style.display = "none";
-  pass_password = "";
-  stage_crea_pass = 0;
-  input_crea_pass = "";
-  newPass_crea_pass = "";
-  document.getElementById("title_crea_pass").textContent =
-    pass_password === "" ? t("create_new") : t("enter_old");
-  document.getElementById("error_crea_pass").textContent = "";
-  updateDots_crea_pass();
-  hidePopup_open_close(crea_pass);
-  box_pass1.classList.add("off");
-  box_pass2.classList.add("off");
-  pass_icon_btn.style.fill = "#000000";
-  finger_icon_btn.style.fill = "#000000";
-  status_pass1.textContent = box_pass1.classList.contains("off") ? "OFF" : "ON";
-  status_pass2.textContent = box_pass2.classList.contains("off") ? "OFF" : "ON";
-  finger_biometrics = box_pass2.classList.contains("off") ? 0 : 1;
+  showPopup2_alert(
+    "Are you sure you want to remove password?",
+    "Yes",
+    "No",
+    () => {
+      remove_pass_btn.style.display = "none";
+      pass_password = "";
+      stage_crea_pass = 0;
+      input_crea_pass = "";
+      newPass_crea_pass = "";
+      document.getElementById("title_crea_pass").textContent =
+        pass_password === "" ? t("create_new") : t("enter_old");
+      document.getElementById("error_crea_pass").textContent = "";
+      updateDots_crea_pass();
+      hidePopup_open_close(crea_pass);
+      box_pass1.classList.add("off");
+      box_pass2.classList.add("off");
+      pass_icon_btn.style.fill = "#000000";
+      finger_icon_btn.style.fill = "#000000";
+      status_pass1.textContent = box_pass1.classList.contains("off")
+        ? "OFF"
+        : "ON";
+      status_pass2.textContent = box_pass2.classList.contains("off")
+        ? "OFF"
+        : "ON";
+      finger_biometrics = box_pass2.classList.contains("off") ? 0 : 1;
 
-  localStorage.removeItem("pass_saved");
-  localStorage.setItem("finger_saved", finger_biometrics.toString());
+      localStorage.removeItem("pass_saved");
+      localStorage.setItem("finger_saved", finger_biometrics.toString());
+    },
+    () => {}
+  );
 });
 
 if (!pass_password || !finger_biometrics) fingerprint.style.display = "none";
