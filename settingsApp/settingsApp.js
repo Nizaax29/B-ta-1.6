@@ -2443,6 +2443,58 @@ function icon_pixel() {
   slider.disabled = true;
 }
 
+function icon_nothing() {
+  localStorage.setItem("selected_icon_pack", "nothing");
+  updateIconBorder("nothing_icon");
+  document.documentElement.style.setProperty("--bg-size_img", "110%");
+
+  setIconAndBackgroundGradient(
+    "box1",
+    "originos_data/iconPacks/nothing_icon/calculator.png"
+  );
+  setIconAndBackgroundGradient(
+    "box2",
+    "originos_data/iconPacks/nothing_icon/files.png"
+  );
+  setIconAndBackgroundGradient(
+    "box3",
+    "originos_data/iconPacks/nothing_icon/music.png"
+  );
+  setIconAndBackgroundGradient(
+    "box4",
+    "originos_data/iconPacks/nothing_icon/settings.png"
+  );
+  setIconAndBackgroundGradient(
+    "box5",
+    "originos_data/iconPacks/nothing_icon/messages.png"
+  );
+  setIconAndBackgroundGradient(
+    "box6",
+    "originos_data/iconPacks/nothing_icon/gallery.png"
+  );
+  setIconAndBackgroundGradient(
+    "box7",
+    "originos_data/iconPacks/nothing_icon/calendar.png"
+  );
+  setIconAndBackgroundGradient(
+    "box8",
+    "originos_data/iconPacks/nothing_icon/phone.png"
+  );
+  setIconAndBackgroundGradient(
+    "box9",
+    "originos_data/iconPacks/nothing_icon/clock.png"
+  );
+  setIconAndBackgroundGradient(
+    "box10",
+    "originos_data/iconPacks/nothing_icon/compass.png"
+  );
+  slider.value = 40;
+  value = slider.value;
+  preview.style.borderRadius = `${value}px`;
+  root.style.setProperty("--bg-border_radius", slider.value + "px");
+  slider.disabled = true;
+}
+
 // -- Shared helper to update border --
 function updateIconBorder(activeId) {
   document.querySelectorAll(".box_icon").forEach((el) => {
@@ -2475,7 +2527,7 @@ let value;
 
 slider.addEventListener("pointerdown", () => {
   pack = localStorage.getItem("selected_icon_pack");
-  if (pack === "oneui" || pack === "pixel") {
+  if (pack === "oneui" || pack === "pixel" || pack === "nothing") {
     tb_system(`Can't change the roundness of this icon pack`);
     return;
   }

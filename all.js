@@ -1028,6 +1028,7 @@ function lock() {
     finger_print.stop();
     finger_print.play();
   }
+  hideAllClickables();
   lockscreen.style.display = "flex";
 
   islock = true;
@@ -1047,7 +1048,6 @@ function lock() {
     wallpaper.style.backgroundImage = `url("${lock_wallpaper}")`;
   }
 
-  hideAllClickables();
   clock.classList.remove("hien");
   document.querySelector(
     ".khayapp"
@@ -1270,18 +1270,21 @@ wallpaper.style.transform = "translateY(250px)";
 phone.style.background = phone_lock_background;
 function powerbtnEvent() {
   if (!islock) lock();
-  lock_content.style.opacity = `1`;
+
+  lock_content.style.opacity = "1";
   swipeHandle.style.opacity = "1";
+
   if (ison) {
-    swipeHandle.style.opacity = `0`;
-    swipeHandle.style.pointerEvents = `none`;
+    // ---- TẮT MÀN HÌNH ----
+    swipeHandle.style.opacity = "0";
+    swipeHandle.style.pointerEvents = "none";
 
     battery3.style.transition =
       battery2.style.transition =
       battery1.style.transition =
       lock_clock_date.style.transition =
       wallpaper.style.transition =
-        `all calc(0.5s * ${currentSpeed}) cubic-bezier(0.23, 0.55, 0.54, 0.97)`;
+        `all calc(0.5s * ${currentSpeed}) cubic-bezier(0.23,0.55,0.54,0.97)`;
 
     battery3.style.opacity =
       battery2.style.opacity =
@@ -1289,28 +1292,27 @@ function powerbtnEvent() {
       lockscreen.style.opacity =
         lockscreen_style_opacity;
 
+    wallpaper.style.transition = `all ${currentSpeed5}s cubic-bezier(0.23,0.55,0.54,0.97)`;
+
     if (
       current_wallpaper_lock == "1" ||
       !always_on_displays ||
       hide_wallpaper
     ) {
-      wallpaper.style.transition = `all ${currentSpeed5}s cubic-bezier(0.23, 0.55, 0.54, 0.97)`;
-      wallpaper.style.height = `${wallpaper_lock_off_height}%`;
-      wallpaper.style.width = `100%`;
-      wallpaper.style.scale = `${wallpaper_lock_off_scale}%`;
-      wallpaper.style.borderRadius = `${wallpaper_lock_off_borderRadius}px`;
-      wallpaper.style.opacity = `${wallpaper_lock_off_opacity}`;
+      wallpaper.style.height = wallpaper_lock_off_height + "%";
+      wallpaper.style.width = "100%";
+      wallpaper.style.scale = wallpaper_lock_off_scale + "%";
+      wallpaper.style.borderRadius = wallpaper_lock_off_borderRadius + "px";
+      wallpaper.style.opacity = wallpaper_lock_off_opacity;
       wallpaper.style.transform = wallpaper_lock_off_transform;
       phone.style.background = phone_lock_off_background;
       lock_clock_date.style.transform = lockclock_style_transform;
     } else {
-      wallpaper.style.transition = `all ${currentSpeed5}s cubic-bezier(0.23, 0.55, 0.54, 0.97)`;
-      wallpaper.style.height = `${wallpaper_lock_height}%`;
+      wallpaper.style.height = wallpaper_lock_height + "%";
       wallpaper.style.scale = `calc(${wallpaper_lock_scale}% + 5%)`;
-      wallpaper.style.borderRadius = `${wallpaper_lock_borderRadius}px`;
+      wallpaper.style.borderRadius = wallpaper_lock_borderRadius + "px";
       wallpaper.style.opacity = `calc(${wallpaper_lock_opacity} * 0.5)`;
       wallpaper.style.transform = wallpaper_lock_transform;
-
       phone.style.background = phone_lock_off_background;
       lock_clock_date.style.transform = "scale(0.93) translateY(30px)";
     }
@@ -1320,25 +1322,30 @@ function powerbtnEvent() {
 
     ison = false;
     removeSwipeEvents();
-    document.getElementById("lockclock").style.filter = "brightness(3)";
-    document.getElementById("dateText").style.filter = "brightness(3)";
+
+    document.getElementById("lockclock").style.filter = document.getElementById(
+      "dateText"
+    ).style.filter = "brightness(3)";
 
     battery1.classList.add("close");
     battery3.classList.add("close");
+
     thanhS1.style.pointerEvents = "none";
     closePopup_noanim();
     if (!always_on_displays) close_all_island();
 
-    island.style.pointerEvents = "none";
-    island2.style.pointerEvents = "none";
-    island_circle.style.pointerEvents = "none";
+    island.style.pointerEvents =
+      island2.style.pointerEvents =
+      island_circle.style.pointerEvents =
+        "none";
 
     show_pass_for_cuslock = false;
     clearTimeout(container_password_timeout);
     removeKeys_password();
   } else {
-    swipeHandle.style.opacity = `1`;
-    swipeHandle.style.pointerEvents = `auto`;
+    // ---- BẬT MÀN HÌNH ----
+    swipeHandle.style.opacity = "1";
+    swipeHandle.style.pointerEvents = "auto";
 
     battery3.style.opacity =
       battery2.style.opacity =
@@ -1347,31 +1354,34 @@ function powerbtnEvent() {
         1;
 
     wallpaper.style.display = "flex";
-    wallpaper.style.transition = `all ${currentSpeed5}s cubic-bezier(0.23, 0.55, 0.54, 0.97)`;
-    wallpaper.style.height = `${wallpaper_lock_height}%`;
-    wallpaper.style.width = `100%`;
-    wallpaper.style.scale = `${wallpaper_lock_scale}%`;
-    wallpaper.style.borderRadius = `${wallpaper_lock_borderRadius}px`;
+    wallpaper.style.transition = `all ${currentSpeed5}s cubic-bezier(0.23,0.55,0.54,0.97)`;
+    wallpaper.style.height = wallpaper_lock_height + "%";
+    wallpaper.style.width = "100%";
+    wallpaper.style.scale = wallpaper_lock_scale + "%";
+    wallpaper.style.borderRadius = wallpaper_lock_borderRadius + "px";
     wallpaper.style.opacity = 1;
+    wallpaper.style.transform = wallpaper_lock_transform;
 
     document.getElementById("wallpaper_aod2").classList.add("hidden");
-
-    wallpaper.style.transform = wallpaper_lock_transform;
     phone.style.background = phone_lock_background;
 
     ison = true;
     addSwipeEvents();
     lock_clock_date.style.transform = "none";
-    document.getElementById("lockclock").style.filter = "brightness(1)";
-    document.getElementById("dateText").style.filter = "brightness(1)";
+
+    document.getElementById("lockclock").style.filter = document.getElementById(
+      "dateText"
+    ).style.filter = "brightness(1)";
 
     battery1.classList.remove("close");
     battery3.classList.remove("close");
+
     thanhS1.style.pointerEvents = "auto";
 
-    island.style.pointerEvents = "auto";
-    island2.style.pointerEvents = "auto";
-    island_circle.style.pointerEvents = "auto";
+    island.style.pointerEvents =
+      island2.style.pointerEvents =
+      island_circle.style.pointerEvents =
+        "auto";
 
     if (!always_on_displays) open_all_island();
   }
@@ -1888,8 +1898,7 @@ function closePopup_noanim() {
   clearTimeout(autoHideClickablesTimer);
   currentOpeningBtn.classList.remove("open");
   currentOpeningBtn.style.scale = `${scale_icon}%`;
-
-  allApp.style.transition = `all 0s`;
+  lp.style.transition = allApp.style.transition = `all 0s`;
 
   lp.classList.remove("open");
   lp.style.scale = 1;
